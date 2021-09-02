@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
     // Player movement vars
     Rigidbody rb;
     public float accelerationSpeed = 5.0f;
     public float maxSpeed = 10.0f;
     public float velocityMultiplier = 1.0f;
+
+    // Player jump vars
+    public Collider groundCheck;
+    public bool isGrounded;
+
 
     // Camera vars
     public Camera cam;
@@ -37,6 +43,14 @@ public class PlayerMovement : MonoBehaviour
         velocityMultiplier = Mathf.Clamp(rb.velocity.magnitude / 4, 1, 50);
 
         rb.velocity += move * velocityMultiplier;
+
+        // Jumping
+        
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.velocity
+        }
 
         // Check if player let off keyboard, decelerate if so
         if (move.x == 0 && rb.velocity.x != 0)
