@@ -19,13 +19,20 @@ public class PlayerMovement : MonoBehaviour
 
     // Camera vars
     public Camera cam;
+    public Transform hRotationHelper;
+    public Transform vRotationHelper;
+
     public float camSmooth = 0.3f;
     float yVelocity = 0.0f;
+    float xVelocity = 0.0f;
+    float xRotOld;
     float xRotation = 0.0f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        hRotationHelper.localRotation = transform.localRotation;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -41,14 +48,14 @@ public class PlayerMovement : MonoBehaviour
 
         // Store keyboard input in a Vector3, normalize and tweak speed
         Vector3 move = (transform.right * xMove + transform.forward * zMove).normalized * accelerationSpeed * Time.deltaTime;
-        
+
         // Exponentially increase movement speed, apply movement
         velocityMultiplier = Mathf.Clamp(rb.velocity.magnitude / 4, 1, 50);
 
         rb.velocity += move * velocityMultiplier;
 
         // Jumping
-        jumpVector = new Vector3(0, jumpForce, 0) * (rb.velocity.magnitude + 1);
+        jumpVector = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z) * (rb.velocity.magnitude + 1);
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -84,8 +91,11 @@ public class PlayerMovement : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
+        // Rotate helper for smooth cam rotation
+        hRotationHelper.Rotate(Vector3.up * mouseX, Space.Self);
+
         // Apply cam rotation
-        transform.Rotate(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, transform.eulerAngles.y, ref yVelocity, camSmooth), 0);
+        transform.localRotation = Quaternion.Euler(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, hRotationHelper.eulerAngles.y, ref yVelocity, camSmooth), 0);
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
         #endregion
     }
