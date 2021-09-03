@@ -14,10 +14,13 @@ public class PlayerMovement : MonoBehaviour
     // Player jump vars
     public Collider groundCheck;
     public bool isGrounded;
-
+    public float jumpForce = 10;
+    Vector3 jumpVector;
 
     // Camera vars
     public Camera cam;
+    public float camSmooth = 0.3f;
+    float yVelocity = 0.0f;
     float xRotation = 0.0f;
 
     void Start()
@@ -45,12 +48,12 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity += move * velocityMultiplier;
 
         // Jumping
-        
+        jumpVector = new Vector3(0, jumpForce, 0) * (rb.velocity.magnitude + 1);
 
-        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        //{
-         //   rb.velocity
-        //}
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.velocity += jumpVector;
+        }
 
         // Check if player let off keyboard, decelerate if so
         if (move.x == 0 && rb.velocity.x != 0)
@@ -82,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -80f, 80f);
 
         // Apply cam rotation
-        transform.Rotate(0, mouseX, 0);
+        transform.Rotate(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, transform.eulerAngles.y, ref yVelocity, camSmooth), 0);
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
         #endregion
     }
