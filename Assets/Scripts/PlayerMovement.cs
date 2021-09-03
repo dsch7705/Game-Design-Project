@@ -47,10 +47,10 @@ public class PlayerMovement : MonoBehaviour
         // Jumping
         
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            rb.velocity
-        }
+        //if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        //{
+         //   rb.velocity
+        //}
 
         // Check if player let off keyboard, decelerate if so
         if (move.x == 0 && rb.velocity.x != 0)
