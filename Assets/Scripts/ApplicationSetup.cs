@@ -10,6 +10,9 @@ public class ApplicationSetup : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = fps;
+
+        float timestep = 1f / fps;
+        UnityEngine.Time.fixedDeltaTime = timestep;
     }
 
     // Update is called once per frame
