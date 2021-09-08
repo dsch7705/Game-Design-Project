@@ -79,7 +79,6 @@ public class PlayerMovement : MonoBehaviour
         // Gather mouse input for camera
         float mouseX = Input.GetAxis("Mouse X") + Input.GetAxis("ControllerHorizontal");
         float mouseY = Input.GetAxis("Mouse Y") + Input.GetAxis("ControllerVertical");
-        Debug.Log(Input.GetAxis("ControllerHorizontal") + "\n" + Input.GetAxis("ControllerVertical"));
 
 
         // Calculate up and down cam rotation

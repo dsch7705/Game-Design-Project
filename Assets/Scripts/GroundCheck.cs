@@ -14,7 +14,6 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        Debug.Log(collision);
         if (collision.gameObject.layer == jumpMask)
         {
             player.isGrounded = true;
