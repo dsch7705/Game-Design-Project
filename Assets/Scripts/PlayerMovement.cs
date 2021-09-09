@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     // Player movement vars
     Rigidbody rb;
     public float accelerationSpeed = 5.0f;
@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public bool isGrounded;
     public float jumpForce = 10;
     Vector3 jumpVector;
-
+    
     // Camera vars
     public Camera cam;
     public Transform hRotationHelper;

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
+    public WeaponManager weaponManager;
+
     public GameObject bullet;
     ObjectPool bulletPool;
 
@@ -13,6 +15,8 @@ public class PlayerShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        weaponManager = GetComponent<WeaponManager>();
+
         bulletPool = ObjectPoolManager.CreatePool("Bullets", bullet, bulletPoolAmount);
     }
 
