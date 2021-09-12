@@ -4,31 +4,96 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    public WeaponManager weaponManager;
 
+    // Weapon Vars
+    public string weaponName;
+    public int weaponFireMode;
+    public float weaponFireRate;
+
+    // Bullet Vars
     public GameObject bullet;
     ObjectPool bulletPool;
-
     public int bulletPoolAmount;
     public float shootForce;
+
+    // Shoot vars
+    private float shotTime;
+    private bool shotReady = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        weaponManager = GetComponent<WeaponManager>();
+        // UpdateWeapon() to be invoked when switching weapons
+        GameEvents.current.onSwitchWeapon += UpdateWeapon;
 
-        bulletPool = ObjectPoolManager.CreatePool("Bullets", bullet, bulletPoolAmount);
+        // UpdateWeapon() to be invoked when WeaponManager has finished initializing
+        GameEvents.current.onWeaponManagerReady += UpdateWeapon;
+
+        bulletPool = ObjectPoolManager.current.CreatePool(name, bullet, bulletPoolAmount);
+
+        Update();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if /*(Input.GetAxisRaw("Shoot") > 0 ||*/ (Input.GetMouseButtonDown(0))
-        {
-            GameObject _bullet = bulletPool.Instantiate(transform.position, Quaternion.Euler(Vector3.zero));
-            Rigidbody rb = _bullet.GetComponent<Rigidbody>();
-        
-            rb.AddForce(transform.forward * shootForce, ForceMode.Impulse);
-        }
+        GetShootInput();
     }
+
+    // Checks for player's input before shooting
+    private void GetShootInput()
+    {
+        // Switch on fire mode, 0 for semi auto 1 for full auto
+        switch (weaponFireMode)
+        {
+            case 0:
+                if (Input.GetMouseButtonDown(0)) { Shoot(); }
+        
+                if (Input.GetAxisRaw("Shoot") != 0)
+                {
+                    if (shotReady == true)
+                    {
+                        Shoot();
+                    }
+                    shotReady = false;
+                }
+                else
+                {
+                    shotReady = true;
+                }
+                break;
+        
+            case 1:
+                if ((Input.GetMouseButton(0) || Input.GetAxisRaw("Shoot") > 0) && shotTime == 0)
+                {
+                    Shoot();
+                    shotTime = weaponFireRate;
+                }
+                else
+                {
+                    shotTime -= Time.deltaTime;
+                    shotTime = Mathf.Clamp(shotTime, 0.0f, weaponFireRate);
+                }
+                break;
+        }
+
+    }
+
+    // Fires weapon
+    private void Shoot()
+    {
+        GameObject _bullet = bulletPool.Instantiate(transform.position, Quaternion.Euler(Vector3.zero));
+        Rigidbody rb = _bullet.GetComponent<Rigidbody>();
+
+        rb.AddForce(transform.forward * shootForce, ForceMode.Impulse);
+    }
+
+    // Updates weapon information
+    private void UpdateWeapon()
+    {
+        weaponName = WeaponManager.current.currentWeaponClass.Item1._name;
+        weaponFireMode = WeaponManager.current.currentWeaponClass.Item1._fireMode;
+        weaponFireRate = 1.0f / WeaponManager.current.currentWeaponClass.Item1._fireRate;
+    }
+
 }

@@ -2,13 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class ObjectPoolManager
+public class ObjectPoolManager : MonoBehaviour
 {
+
+    // Singleton
+    public static ObjectPoolManager current;
+
     // Create list of ObjectPools
-    public static List<ObjectPool> pools = new List<ObjectPool>();
+    public List<ObjectPool> pools = new List<ObjectPool>();
+
+    private void Start()
+    {
+        current = this;
+    }
 
     // Creats and adds a new ObjectPool to list, return ObjectPool
-    public static ObjectPool CreatePool(string name, GameObject prefab, int count)
+    public ObjectPool CreatePool(string name, GameObject prefab, int count)
     {
         ObjectPool pool = new ObjectPool(name, prefab, count);
         pools.Add(pool);
@@ -16,7 +25,7 @@ public static class ObjectPoolManager
     }
 
     // Destroy ObjectPool of given name
-    public static void DestroyPool(string name)
+    public void DestroyPool(string name)
     {
         foreach (ObjectPool pool in pools)
         {
@@ -33,7 +42,7 @@ public static class ObjectPoolManager
     }
 
     // Destroy ObjectPool at given index
-    public static void DestroyPool(int index) 
+    public void DestroyPool(int index) 
     {
         if (pools.Count > index)
         {
@@ -46,7 +55,7 @@ public static class ObjectPoolManager
         }
     }
 
-    //public static ObjectPool GetPool(string name)
+    //public ObjectPool GetPool(string name)
     //{
     //    foreach (ObjectPool pool in pools)
     //    {
@@ -60,7 +69,7 @@ public static class ObjectPoolManager
     //}
 
     // Remove all items from list
-    public static void ClearPools()
+    public void ClearPools()
     {
         pools.Clear();
     }

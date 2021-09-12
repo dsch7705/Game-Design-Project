@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
     // Player movement vars
     Rigidbody rb;
     public float accelerationSpeed = 5.0f;
@@ -44,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         #region Player
 
-        // Gather keyboard input
+        // Keyboard input
         float xMove = Input.GetAxisRaw("Horizontal");
         float zMove = Input.GetAxisRaw("Vertical");
 
@@ -72,6 +74,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
+
+
         #endregion
 
         #region Camera
@@ -94,4 +98,5 @@ public class PlayerMovement : MonoBehaviour
         cam.transform.localRotation = Quaternion.Euler(Mathf.SmoothDampAngle(cam.transform.eulerAngles.x, vRotationHelper.eulerAngles.x, ref xVelocity, camSmooth), 0, 0);
         #endregion
     }
+
 }

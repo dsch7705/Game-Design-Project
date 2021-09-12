@@ -7,20 +7,19 @@ public class WeaponClass
 {
 
     public string _name;
-    public FireMode _fireMode;
+    /// <summary>
+    /// 0 for single shot, 1 for semi auto
+    /// </summary>
+    public int _fireMode;
+    /// <summary>
+    /// bullets per second
+    /// </summary>
     public float _fireRate;
 
-    public enum FireMode
-    {
-        single,
-        semi,
-        full
-    }
-
-    public WeaponClass(string name, FireMode fireMode, float fireRate)
+    public WeaponClass(string name, int fireMode, float fireRate)
     {
         _name = name;
-        _fireMode = fireMode;
+        _fireMode = (int)Mathf.Clamp(fireMode, 0.0f, 1.0f);
         _fireRate = fireRate;
 
     }
