@@ -12,21 +12,30 @@ public class GameEvents : MonoBehaviour
         current = this;
     }
 
-    public event Action onSwitchWeapon;
+    public event Action OnSwitchWeapon;
     public void SwitchWeapon()
     {
-        if (onSwitchWeapon != null)
+        if (OnSwitchWeapon != null)
         {
-            onSwitchWeapon();
+            OnSwitchWeapon();
         }
     }
 
-    public event Action onWeaponManagerReady;
+    public event Action OnWeaponManagerReady;
     public void WeaponManagerReady()
     {
-        if (onWeaponManagerReady != null)
+        if (OnWeaponManagerReady != null)
         {
-            onWeaponManagerReady();
+            OnWeaponManagerReady();
+        }
+    }
+
+    public event Action OnEnemyKilled;
+    public void EnemyKilled()
+    {
+        if (OnEnemyKilled != null)
+        {
+            OnEnemyKilled();
         }
     }
 }

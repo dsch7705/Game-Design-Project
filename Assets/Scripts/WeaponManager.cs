@@ -20,8 +20,8 @@ public class WeaponManager : MonoBehaviour
     {
         current = this;
 
-        weapons.Add(new WeaponClass("Pistol", 0, 2.0f));
-        weapons.Add(new WeaponClass("Assault Rifle", 1, 10.0f));
+        weapons.Add(new WeaponClass("Pistol", 2.0f, 0, 2.0f));
+        weapons.Add(new WeaponClass("Assault Rifle", 1.0f, 1, 10.0f));
         currentWeaponClass.Item1 = weapons[0];
         currentWeaponClass.Item2 = 0;
 
