@@ -11,4 +11,14 @@ public class Player : MonoBehaviour
         current = this;
     }
 
+    public float GetPlayerX()
+    {
+        return transform.position.x;
+    }
+
+    public float GetPlayerY()
+    {
+        return transform.position.y;
+    }
+
 }

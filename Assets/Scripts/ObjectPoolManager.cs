@@ -19,9 +19,14 @@ public class ObjectPoolManager : MonoBehaviour
     // Creats and adds a new ObjectPool to list, return ObjectPool
     public ObjectPool CreatePool(string name, GameObject prefab, int count)
     {
-        ObjectPool pool = new ObjectPool(name, prefab, count);
-        pools.Add(pool);
-        return pool;
+        if (prefab != null)
+        {
+            ObjectPool pool = new ObjectPool(name, prefab, count);
+            pools.Add(pool);
+            return pool;
+        }
+        Debug.LogWarning("Prefab empty");
+        return null;
     }
 
     // Destroy ObjectPool of given name

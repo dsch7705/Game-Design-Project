@@ -20,8 +20,10 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.rotation = Quaternion.LookRotation(Player.current.transform.position - transform.position);
-        transform.position += Vector3.forward;
+        Vector3 lookPos = Player.current.transform.position - transform.position;
+
+        transform.rotation = Quaternion.LookRotation(lookPos, Vector3.up); //Quaternion.Euler(0.0f, Mathf.Atan((Player.current.transform.position.y - transform.position.y) / (Player.current.transform.position.x - transform.position.x)), 0.0f);
+        transform.position += transform.forward * 0.01f;
     }
 
     private void Damage(float damage)
@@ -36,6 +38,7 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         GameEvents.current.EnemyKilled();
+        GameEvents.current.SpawnEnemy();
         GameObject.Destroy(this.gameObject);
     }
 }

@@ -38,4 +38,13 @@ public class GameEvents : MonoBehaviour
             OnEnemyKilled();
         }
     }
+
+    public event Action OnSpawnEnemy;
+    public void SpawnEnemy()
+    {
+        if (OnSpawnEnemy != null)
+        {
+            OnSpawnEnemy();
+        }
+    }
 }
