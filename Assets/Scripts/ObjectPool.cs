@@ -9,6 +9,7 @@ public class ObjectPool
     public string _poolName;
     public GameObject _prefab;
     public int _count;
+    public bool _disableOnSpawn = true;
     GameObject pool;
 
     // Initialize queue for pooled items
@@ -23,6 +24,16 @@ public class ObjectPool
         Awake();
     }
 
+    public ObjectPool(string poolName, GameObject prefab, int count, bool disableOnSpawn)
+    {
+        _poolName = poolName;
+        _prefab = prefab;
+        _count = count;
+        _disableOnSpawn = disableOnSpawn;
+
+        Awake();
+    }
+
     private void Awake()
     {
         pool = new GameObject(_poolName);
@@ -31,7 +42,10 @@ public class ObjectPool
         {
             GameObject _item = Object.Instantiate(_prefab, pool.transform);
             items.Enqueue(_item);
-            _item.SetActive(false);
+            if (_disableOnSpawn)
+            {
+                _item.SetActive(false);
+            }
         }
     }
 
@@ -58,8 +72,17 @@ public class ObjectPool
         return null;
     }
 
+    //public void Destroy(GameObject gameObject)
+    //{
+    //    if (items.Contains(gameObject))
+    //    {
+    //        gameObject.SetActive(false);
+    //        items.Enqueue(gameObject);
+    //    } 
+    //}
+
     // Destroy pool GameObject
-    public void Destroy()
+    public void DestroyPool()
     {
         GameObject.Destroy(pool);
     }

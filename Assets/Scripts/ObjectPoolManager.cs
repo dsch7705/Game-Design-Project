@@ -29,6 +29,18 @@ public class ObjectPoolManager : MonoBehaviour
         return null;
     }
 
+    public ObjectPool CreatePool(string name, GameObject prefab, int count, bool disableOnSpawn)
+    {
+        if (prefab != null)
+        {
+            ObjectPool pool = new ObjectPool(name, prefab, count, disableOnSpawn);
+            pools.Add(pool);
+            return pool;
+        }
+        Debug.LogWarning("Prefab empty");
+        return null;
+    }
+
     // Destroy ObjectPool of given name
     public void DestroyPool(string name)
     {
@@ -36,7 +48,7 @@ public class ObjectPoolManager : MonoBehaviour
         {
             if (pool._poolName == name)
             {
-                pool.Destroy();
+                pool.DestroyPool();
                 pools.Remove(pool);
                 Debug.Log("Successfully removed ObjectPool");
                 return;
@@ -51,7 +63,7 @@ public class ObjectPoolManager : MonoBehaviour
     {
         if (pools.Count > index)
         {
-            pools[index].Destroy();
+            pools[index].DestroyPool();
             pools.RemoveAt(index);
         }
         else

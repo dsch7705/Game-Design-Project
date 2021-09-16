@@ -17,12 +17,19 @@ public class EnemyManager : MonoBehaviour
 
         GameEvents.current.OnSpawnEnemy += SpawnEnemy;
 
-        ObjectPool objectPool = ObjectPoolManager.current.CreatePool("Enemy", enemyPrefab, 10);
+        ObjectPool objectPool = ObjectPoolManager.current.CreatePool("Enemy", enemyPrefab, 10, false);
         enemyPool = objectPool; //ObjectPoolManager.current.CreatePool("Enemies", enemyPrefab, 10);
+
+        SpawnEnemy();
     }
 
-    private void SpawnEnemy()
+    public void DestroyEnemy(GameObject enemy)
     {
-        Enemy enemy = enemyPool.Instantiate(Vector3.zero, Quaternion.identity).GetComponent<Enemy>();
+        //enemyPool.Destroy(enemy);
+    }
+
+    public void SpawnEnemy()
+    {
+        Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity).GetComponent<Enemy>();
     }
 }
