@@ -40,6 +40,6 @@ public class Enemy : MonoBehaviour
         GameEvents.current.EnemyKilled();
         GameEvents.current.SpawnEnemy();
 
-        EnemyManager.current.DestroyEnemy(this.gameObject);
+        EnemyManager.current.DestroyEnemy(gameObject);
     }
 }

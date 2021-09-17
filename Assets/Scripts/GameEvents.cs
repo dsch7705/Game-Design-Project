@@ -37,6 +37,10 @@ public class GameEvents : MonoBehaviour
         {
             OnEnemyKilled();
         }
+        else
+        {
+            Debug.Log("No subscribers to OnEnemyKilled");
+        }
     }
 
     public event Action OnSpawnEnemy;

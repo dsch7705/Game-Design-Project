@@ -13,7 +13,7 @@ public class ObjectPool
     GameObject pool;
 
     // Initialize queue for pooled items
-    public Queue<GameObject> items = new Queue<GameObject>();
+    public ListQueue<GameObject> items = new ListQueue<GameObject>();
 
     public ObjectPool(string poolName, GameObject prefab, int count)
     {
@@ -72,14 +72,48 @@ public class ObjectPool
         return null;
     }
 
-    //public void Destroy(GameObject gameObject)
-    //{
-    //    if (items.Contains(gameObject))
-    //    {
-    //        gameObject.SetActive(false);
-    //        items.Enqueue(gameObject);
-    //    } 
-    //}
+    public GameObject Instantiate(Vector3 position, Quaternion rotation, int indexToDequeue)
+    {
+        if (items.Count > 0)
+        {
+            GameObject _item = items.DequeueAt(indexToDequeue);
+
+            _item.SetActive(true);
+            _item.transform.position = position;
+            _item.transform.rotation = rotation;
+
+            items.Enqueue(_item);
+
+            if (_item.GetComponent<Rigidbody>() != null)
+            {
+                _item.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            }
+
+            return _item;
+        }
+        Debug.LogWarning("ObjectPool '" + _poolName + "' is empty.");
+        return null;
+    }
+
+    public void Destroy(GameObject gameObject)
+    {
+        if (items.Contains(gameObject))
+        {
+            gameObject.SetActive(false);
+            Debug.Log("enemy disabled");
+            items.Enqueue(gameObject);
+        } 
+    }
+
+    public int GetLastIndex()
+    {
+        if (items.Count > 0)
+        {
+            return items.Count - 1;
+        }
+        Debug.LogWarning("nothing in queue");
+        return 0;
+    }
 
     // Destroy pool GameObject
     public void DestroyPool()

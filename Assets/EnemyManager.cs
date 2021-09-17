@@ -25,11 +25,11 @@ public class EnemyManager : MonoBehaviour
 
     public void DestroyEnemy(GameObject enemy)
     {
-        //enemyPool.Destroy(enemy);
+        enemyPool.Destroy(enemy);
     }
 
     public void SpawnEnemy()
     {
-        Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity).GetComponent<Enemy>();
+        Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, enemyPool.GetLastIndex()).GetComponent<Enemy>();
     }
 }
