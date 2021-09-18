@@ -125,3 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34738dc611cb8d54ca601722cc02224e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageLayer: Enemy
+  _damage: 0
+  _canDamage: 0

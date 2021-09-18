@@ -21,7 +21,9 @@ public class WeaponManager : MonoBehaviour
         current = this;
 
         weapons.Add(new WeaponClass("Pistol", 2.0f, 0, 2.0f));
-        weapons.Add(new WeaponClass("Assault Rifle", 1.0f, 1, 10.0f));
+        weapons.Add(new WeaponClass("Assault Rifle", 2.0f, 1, 10.0f));
+        weapons.Add(new WeaponClass("THE NOLAN SUPER COOL LAUNCHER", 1000000.0f, 0, 0.25f));
+
         currentWeaponClass.Item1 = weapons[0];
         currentWeaponClass.Item2 = 0;
 
@@ -48,6 +50,11 @@ public class WeaponManager : MonoBehaviour
         _currentWeaponClass = currentWeaponClass.Item2 += change;
         currentWeaponClass.Item1 = weapons[currentWeaponClass.Item2];
         GameEvents.current.SwitchWeapon();
+    }
+
+    public string GetWeaponClassName()
+    {
+        return currentWeaponClass.Item1._name;
     }
 
     // TERRIBLE FIX

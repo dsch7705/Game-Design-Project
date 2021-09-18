@@ -43,12 +43,30 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action OnPlayerKillsChanged;
+    public void PlayerKillsChanged()
+    {
+        if (OnPlayerKillsChanged != null)
+        {
+            OnPlayerKillsChanged();
+        }
+    }
+
     public event Action OnSpawnEnemy;
     public void SpawnEnemy()
     {
         if (OnSpawnEnemy != null)
         {
             OnSpawnEnemy();
+        }
+    }
+
+    public event Action OnAudioManagerReady;
+    public void AudioManagerReady()
+    {
+        if (OnAudioManagerReady != null)
+        {
+            OnAudioManagerReady();
         }
     }
 }

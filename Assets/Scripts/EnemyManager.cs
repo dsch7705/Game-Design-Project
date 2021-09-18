@@ -8,8 +8,10 @@ public class EnemyManager : MonoBehaviour
     // Singleton
     public static EnemyManager current;
 
+    // Enemy Vars
     public GameObject enemyPrefab;
     public ObjectPool enemyPool;
+    public int count;
 
     private void Start()
     {
@@ -17,7 +19,7 @@ public class EnemyManager : MonoBehaviour
 
         GameEvents.current.OnSpawnEnemy += SpawnEnemy;
 
-        ObjectPool objectPool = ObjectPoolManager.current.CreatePool("Enemy", enemyPrefab, 10, false);
+        ObjectPool objectPool = ObjectPoolManager.current.CreatePool("Enemy", enemyPrefab, count, false);
         enemyPool = objectPool; //ObjectPoolManager.current.CreatePool("Enemies", enemyPrefab, 10);
 
         SpawnEnemy();
@@ -26,6 +28,8 @@ public class EnemyManager : MonoBehaviour
     public void DestroyEnemy(GameObject enemy)
     {
         enemyPool.Destroy(enemy);
+
+        AudioManager.current.PlayRandomClip(GameAssets.current.enemyDeathClips);
     }
 
     public void SpawnEnemy()

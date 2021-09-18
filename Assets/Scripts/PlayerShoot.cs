@@ -17,9 +17,12 @@ public class PlayerShoot : MonoBehaviour
     public int bulletPoolAmount;
     public float shootForce;
 
-    // Shoot vars
+    // Shoot Vars
     private float shotTime;
     private bool shotReady = true;
+
+    // Audio Vars
+    public bool audioManagerReady = false;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +32,9 @@ public class PlayerShoot : MonoBehaviour
 
         // UpdateWeapon() to be invoked when WeaponManager has finished initializing
         GameEvents.current.OnWeaponManagerReady += UpdateWeapon;
+
+        // AudioManagerReady() to be invoked when AudioManager has finished initializing
+        GameEvents.current.OnAudioManagerReady += SetAudioManagerReady;
 
         bulletPool = ObjectPoolManager.current.CreatePool(name, bullet, bulletPoolAmount);
 
@@ -48,7 +54,15 @@ public class PlayerShoot : MonoBehaviour
         switch (weaponFireMode)
         {
             case 0:
-                if (Input.GetMouseButtonDown(0)) { Shoot(); }
+                if (Input.GetMouseButtonDown(0) && shotTime <= 0)
+                {
+                    Shoot();
+                    shotTime = weaponFireRate;
+                }
+                else
+                {
+                    shotTime -= Time.deltaTime;
+                }
         
                 if (Input.GetAxisRaw("Shoot") != 0)
                 {
@@ -65,7 +79,7 @@ public class PlayerShoot : MonoBehaviour
                 break;
         
             case 1:
-                if ((Input.GetMouseButton(0) || Input.GetAxisRaw("Shoot") > 0) && shotTime == 0)
+                if ((Input.GetMouseButton(0) || Input.GetAxisRaw("Shoot") > 0) && shotTime <= 0)
                 {
                     Shoot();
                     shotTime = weaponFireRate;
@@ -73,7 +87,6 @@ public class PlayerShoot : MonoBehaviour
                 else
                 {
                     shotTime -= Time.deltaTime;
-                    shotTime = Mathf.Clamp(shotTime, 0.0f, weaponFireRate);
                 }
                 break;
         }
@@ -87,6 +100,8 @@ public class PlayerShoot : MonoBehaviour
 
         // Get Bullet component of bullet prefab, set damage of bullet
         Bullet _bulletObject = _bullet.GetComponent<Bullet>();
+        _bulletObject.InitializeBullet(weaponDamage);
+
         if (_bulletObject._damage != weaponDamage)
         {
             _bulletObject._damage = weaponDamage;
@@ -95,6 +110,9 @@ public class PlayerShoot : MonoBehaviour
         // Get Rigidbody component of bullet prefab, add shooting force
         Rigidbody rb = _bullet.GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * shootForce, ForceMode.Impulse);
+
+        // Play shooting sound
+        AudioManager.current.PlayRandomClip(GameAssets.current.shootAudioClips);
     }
 
     // Updates weapon information
@@ -104,6 +122,11 @@ public class PlayerShoot : MonoBehaviour
         weaponDamage = WeaponManager.current.currentWeaponClass.Item1._damage;
         weaponFireMode = WeaponManager.current.currentWeaponClass.Item1._fireMode;
         weaponFireRate = 1.0f / WeaponManager.current.currentWeaponClass.Item1._fireRate;
+    }
+
+    private void SetAudioManagerReady()
+    {
+        audioManagerReady = true;
     }
 
 }
