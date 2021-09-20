@@ -13,6 +13,13 @@ public class EnemyManager : MonoBehaviour
     public ObjectPool enemyPool;
     public int count;
 
+    // Wave Vars
+    public int wave = 1;
+    public int enemiesInWave;
+    public int enemiesAtOnce;
+    public float enemyMultiplier = 1.5f;
+    public bool waveActive;
+
     private void Start()
     {
         current = this;
@@ -28,6 +35,7 @@ public class EnemyManager : MonoBehaviour
     public void DestroyEnemy(GameObject enemy)
     {
         enemyPool.Destroy(enemy);
+        StartWave(2);
 
         AudioManager.current.PlayRandomClip(GameAssets.current.enemyDeathClips);
     }
@@ -35,5 +43,25 @@ public class EnemyManager : MonoBehaviour
     public void SpawnEnemy()
     {
         Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, enemyPool.GetLastIndex()).GetComponent<Enemy>();
+    }
+
+    public void StartWave(int waveNumber)
+    {
+        enemyPool.DisableAll();
+
+        wave = waveNumber;
+        enemiesInWave = (int)(wave * enemyMultiplier);
+        enemiesAtOnce = (int)(enemiesInWave / 2.0f);
+
+        waveActive = true;
+        WatchWave(enemiesInWave, enemiesAtOnce);
+    }
+
+    public void WatchWave(int enemies, int enemiesAllowed)
+    {
+        while (waveActive)
+        {
+
+        }
     }
 }

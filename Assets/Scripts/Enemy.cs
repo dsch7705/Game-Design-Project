@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer(damagedByLayer))
         {
-            Debug.Log("LIBTARD");
             Bullet _bullet = collision.gameObject.GetComponent<Bullet>();
             if (_bullet._canDamage)
             {

@@ -100,9 +100,16 @@ public class ObjectPool
         if (items.Contains(gameObject))
         {
             gameObject.SetActive(false);
-            Debug.Log("enemy disabled");
             items.Enqueue(gameObject);
         } 
+    }
+
+    public void DisableAll()
+    {
+        foreach (GameObject item in items)
+        {
+            item.SetActive(false);
+        }
     }
 
     public int GetLastIndex()
@@ -113,6 +120,20 @@ public class ObjectPool
         }
         Debug.LogWarning("nothing in queue");
         return 0;
+    }
+
+    public int GetActiveCount()
+    {
+        int activeCount = 0;
+        foreach (GameObject item in items)
+        {
+            if (item.activeSelf == true)
+            {
+                activeCount++;
+            }
+        }
+
+        return activeCount;
     }
 
     // Destroy pool GameObject

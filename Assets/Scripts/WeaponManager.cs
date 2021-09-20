@@ -22,7 +22,6 @@ public class WeaponManager : MonoBehaviour
 
         weapons.Add(new WeaponClass("Pistol", 2.0f, 0, 2.0f));
         weapons.Add(new WeaponClass("Assault Rifle", 2.0f, 1, 10.0f));
-        weapons.Add(new WeaponClass("THE NOLAN SUPER COOL LAUNCHER", 1000000.0f, 0, 0.25f));
 
         currentWeaponClass.Item1 = weapons[0];
         currentWeaponClass.Item2 = 0;
