@@ -132,7 +132,7 @@ public class ObjectPool
                 activeCount++;
             }
         }
-
+        Debug.Log(activeCount + " active objects.");
         return activeCount;
     }
 

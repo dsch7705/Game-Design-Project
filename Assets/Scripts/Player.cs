@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player current;
-    private int kills = 0;
+    public int kills = 0;
 
     private void Start()
     {

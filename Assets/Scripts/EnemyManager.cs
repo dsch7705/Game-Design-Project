@@ -24,18 +24,19 @@ public class EnemyManager : MonoBehaviour
     {
         current = this;
 
+        GameEvents.current.OnEnemyKilled += WaveManager;
         GameEvents.current.OnSpawnEnemy += SpawnEnemy;
 
-        ObjectPool objectPool = ObjectPoolManager.current.CreatePool("Enemy", enemyPrefab, count, false);
+        ObjectPool objectPool = ObjectPoolManager.current.CreatePool("Enemy", enemyPrefab, count, true);
         enemyPool = objectPool; //ObjectPoolManager.current.CreatePool("Enemies", enemyPrefab, 10);
 
-        SpawnEnemy();
+        StartWave(4);
     }
 
     public void DestroyEnemy(GameObject enemy)
     {
         enemyPool.Destroy(enemy);
-        StartWave(2);
+        //StartWave(2);
 
         AudioManager.current.PlayRandomClip(GameAssets.current.enemyDeathClips);
     }
@@ -54,14 +55,21 @@ public class EnemyManager : MonoBehaviour
         enemiesAtOnce = (int)(enemiesInWave / 2.0f);
 
         waveActive = true;
-        WatchWave(enemiesInWave, enemiesAtOnce);
+        WaveManager();
     }
 
-    public void WatchWave(int enemies, int enemiesAllowed)
+    private void Update()
     {
-        while (waveActive)
+        WaveManager();
+    }
+
+    public void WaveManager()
+    {
+        Debug.Log("Starting wave with " + enemiesInWave + " enemies.");
+        if (enemyPool.GetActiveCount() < enemiesAtOnce && Player.current.kills + enemiesAtOnce < enemiesInWave)
         {
 
+            SpawnEnemy();
         }
     }
 }
