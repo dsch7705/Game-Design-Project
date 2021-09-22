@@ -19,18 +19,19 @@ public class EnemyManager : MonoBehaviour
     public int enemiesAtOnce;
     public float enemyMultiplier = 1.5f;
     public bool waveActive;
+    public int waveKills = 0;
 
     private void Start()
     {
         current = this;
 
-        GameEvents.current.OnEnemyKilled += WaveManager;
+        //GameEvents.current.OnEnemyKilled += WaveManager;
         GameEvents.current.OnSpawnEnemy += SpawnEnemy;
 
         ObjectPool objectPool = ObjectPoolManager.current.CreatePool("Enemy", enemyPrefab, count, true);
         enemyPool = objectPool; //ObjectPoolManager.current.CreatePool("Enemies", enemyPrefab, 10);
 
-        StartWave(4);
+        StartWave(wave);
     }
 
     public void DestroyEnemy(GameObject enemy)
@@ -43,7 +44,20 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnEnemy()
     {
-        Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, enemyPool.GetLastIndex()).GetComponent<Enemy>();
+        if (waveKills + enemiesAtOnce <= enemiesInWave)
+        {
+            Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, enemiesInWave - 1).GetComponent<Enemy>();
+        }
+        else if (waveKills == enemiesInWave)
+        {
+            wave++;
+            StartWave(wave);
+        }
+    }
+
+    public void SpawnFirstEnemy()
+    {
+        Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity).GetComponent<Enemy>();
     }
 
     public void StartWave(int waveNumber)
@@ -55,21 +69,33 @@ public class EnemyManager : MonoBehaviour
         enemiesAtOnce = (int)(enemiesInWave / 2.0f);
 
         waveActive = true;
-        WaveManager();
+
+        for (int i = 0; i < enemiesAtOnce; i++)
+        {
+            SpawnFirstEnemy();
+            Debug.Log("spawning enemy " + i);
+        }
+
+        waveKills = 0;
+        //WaveManager();
     }
 
     private void Update()
     {
-        WaveManager();
+        //WaveManager();
     }
 
-    public void WaveManager()
-    {
-        Debug.Log("Starting wave with " + enemiesInWave + " enemies.");
-        if (enemyPool.GetActiveCount() < enemiesAtOnce && Player.current.kills + enemiesAtOnce < enemiesInWave)
-        {
-
-            SpawnEnemy();
-        }
-    }
+    //public void WaveManager()
+    //{
+    //    Debug.Log("Starting wave with " + enemiesInWave + " enemies.");
+    //    if (enemyPool.GetActiveCount() < enemiesAtOnce && Player.current.kills + enemiesAtOnce <= enemiesInWave)
+    //    {
+    //        SpawnFirstEnemy();
+    //    }
+    //    else if (Player.current.kills >= enemiesInWave)
+    //    {
+    //        wave++;
+    //        StartWave(wave);
+    //    }
+    //}
 }

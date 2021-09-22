@@ -127,7 +127,7 @@ public class ObjectPool
         int activeCount = 0;
         foreach (GameObject item in items)
         {
-            if (item.activeSelf == true)
+            if (item.activeInHierarchy == true)
             {
                 activeCount++;
             }
