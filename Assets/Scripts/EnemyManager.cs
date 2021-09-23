@@ -46,12 +46,16 @@ public class EnemyManager : MonoBehaviour
     {
         if (waveKills + enemiesAtOnce <= enemiesInWave)
         {
-            Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, enemiesInWave - 1).GetComponent<Enemy>();
+            Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, enemiesInWave - 1, 0).GetComponent<Enemy>();
         }
         else if (waveKills == enemiesInWave)
         {
             wave++;
             StartWave(wave);
+        }
+        else
+        {
+            Debug.Log("No more enemies to spawn");
         }
     }
 

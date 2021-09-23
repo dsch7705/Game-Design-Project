@@ -95,6 +95,29 @@ public class ObjectPool
         return null;
     }
 
+    public GameObject Instantiate(Vector3 position, Quaternion rotation, GameObject objToDequeue)
+    {
+        if (items.Count > 0)
+        {
+            GameObject _item = items.DequeueAt(indexToDequeue);
+
+            _item.SetActive(true);
+            _item.transform.position = position;
+            _item.transform.rotation = rotation;
+
+            items.Enqueue(_item);
+
+            if (_item.GetComponent<Rigidbody>() != null)
+            {
+                _item.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            }
+
+            return _item;
+        }
+        Debug.LogWarning("ObjectPool '" + _poolName + "' is empty.");
+        return null;
+    }
+
     public void Destroy(GameObject gameObject)
     {
         if (items.Contains(gameObject))
