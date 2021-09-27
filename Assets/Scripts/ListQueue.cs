@@ -24,4 +24,19 @@ public class ListQueue<T> : List<T>
 
         return item;
     }
+
+    public T DequeueSpecific(T item)
+    {
+        if (base.Contains(item))
+        {
+            int i = base.IndexOf(item);
+            var _item = base[i];
+
+            base.Remove(_item);
+            return _item;
+        }
+        Debug.Log("item not found");
+        return default(T);
+        
+    }
 }

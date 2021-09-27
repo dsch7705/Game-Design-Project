@@ -9,7 +9,7 @@ public class WeaponClass
     public string _name;
     public float _damage;
     /// <summary>
-    /// 0 for single shot, 1 for semi auto
+    /// 0 for single shot, 1 for full auto, 2 for launcher?
     /// </summary>
     public int _fireMode;
     /// <summary>

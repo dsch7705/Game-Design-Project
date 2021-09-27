@@ -12,6 +12,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject enemyPrefab;
     public ObjectPool enemyPool;
     public int count;
+    private GameObject lastEnemy;
 
     // Wave Vars
     public int wave = 1;
@@ -37,6 +38,7 @@ public class EnemyManager : MonoBehaviour
     public void DestroyEnemy(GameObject enemy)
     {
         enemyPool.Destroy(enemy);
+        lastEnemy = enemy;
         //StartWave(2);
 
         AudioManager.current.PlayRandomClip(GameAssets.current.enemyDeathClips);
@@ -46,7 +48,7 @@ public class EnemyManager : MonoBehaviour
     {
         if (waveKills + enemiesAtOnce <= enemiesInWave)
         {
-            Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, enemiesInWave - 1, 0).GetComponent<Enemy>();
+            Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, lastEnemy).GetComponent<Enemy>();
         }
         else if (waveKills == enemiesInWave)
         {

@@ -99,7 +99,7 @@ public class ObjectPool
     {
         if (items.Count > 0)
         {
-            GameObject _item = items.DequeueAt(indexToDequeue);
+            GameObject _item = items.DequeueSpecific(objToDequeue);
 
             _item.SetActive(true);
             _item.transform.position = position;
