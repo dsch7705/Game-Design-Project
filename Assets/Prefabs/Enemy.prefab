@@ -111,7 +111,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
-  damagedByLayer: Bullet
+  damagedByLayer:
+    serializedVersion: 2
+    m_Bits: 128
   damageAmount: 0.5
 --- !u!54 &2205134584208648787
 Rigidbody:

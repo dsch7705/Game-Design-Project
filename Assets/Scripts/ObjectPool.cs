@@ -127,6 +127,15 @@ public class ObjectPool
         } 
     }
 
+    public void Destroy(GameObject gameObject, int enqueuePos)
+    {
+        if (items.Contains(gameObject))
+        {
+            gameObject.SetActive(false);
+            items.EnqueueAt(gameObject, enqueuePos);
+        }
+    }
+
     public void DisableAll()
     {
         foreach (GameObject item in items)
@@ -134,6 +143,8 @@ public class ObjectPool
             item.SetActive(false);
         }
     }
+
+    //public void ResetPool
 
     public int GetLastIndex()
     {

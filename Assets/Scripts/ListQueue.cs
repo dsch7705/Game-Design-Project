@@ -9,6 +9,11 @@ public class ListQueue<T> : List<T>
         base.Add(item);
     }
 
+    public void EnqueueAt(T item, int index)
+    {
+        base.Insert(index, item);
+    }
+
     public T Dequeue()
     {
         var item = base[0];

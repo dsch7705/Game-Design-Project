@@ -19,6 +19,7 @@ public class EnemyManager : MonoBehaviour
     public int enemiesInWave;
     public int enemiesAtOnce;
     public float enemyMultiplier = 1.5f;
+    public float enemyGrowthRate = 0.25f;
     public bool waveActive;
     public int waveKills = 0;
 
@@ -37,7 +38,7 @@ public class EnemyManager : MonoBehaviour
 
     public void DestroyEnemy(GameObject enemy)
     {
-        enemyPool.Destroy(enemy);
+        enemyPool.Destroy(enemy, 0);
         lastEnemy = enemy;
         //StartWave(2);
 
@@ -63,16 +64,18 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnFirstEnemy()
     {
-        Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity).GetComponent<Enemy>();
+        Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, 0).GetComponent<Enemy>();
     }
 
     public void StartWave(int waveNumber)
     {
         enemyPool.DisableAll();
 
+        enemyMultiplier += enemyGrowthRate;
+
         wave = waveNumber;
         enemiesInWave = (int)(wave * enemyMultiplier);
-        enemiesAtOnce = (int)(enemiesInWave / 2.0f);
+        enemiesAtOnce = 1 + (int)(enemiesInWave / 2.0f);
 
         waveActive = true;
 

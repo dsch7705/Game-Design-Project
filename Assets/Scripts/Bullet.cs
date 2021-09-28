@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public string damageLayer;
+    public LayerMask ricochetLayer;
+    public LayerMask damageLayer;
+
     public float _damage;
     public bool _canDamage;
 
@@ -14,12 +16,19 @@ public class Bullet : MonoBehaviour
         _canDamage = true;
     }
 
-    //public void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.layer == LayerMask.NameToLayer(damageLayer))
-    //    {
-    //        _canDamage = false;
-    //        Debug.Log("collided with enemy");
-    //    }
-    //}
+    private void OnCollisionEnter(Collision collision)
+    {
+        int layer = collision.gameObject.layer;
+        if (damageLayer == 1 << layer && _canDamage)
+        {
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            enemy.Damage(_damage);
+
+            _canDamage = false;
+        }
+        else if (ricochetLayer != 1 << layer)
+        {
+            _canDamage = false;
+        }
+    }
 }

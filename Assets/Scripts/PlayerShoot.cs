@@ -13,6 +13,7 @@ public class PlayerShoot : MonoBehaviour
 
     // Bullet Vars
     public GameObject bullet;
+    public Transform bulletSpawn;
     ObjectPool bulletPool;
     public int bulletPoolAmount;
     public float shootForce;
@@ -96,7 +97,7 @@ public class PlayerShoot : MonoBehaviour
     // Fires weapon
     private void Shoot()
     {
-        GameObject _bullet = bulletPool.Instantiate(transform.position, Quaternion.Euler(Vector3.zero));
+        GameObject _bullet = bulletPool.Instantiate(bulletSpawn.position, Quaternion.Euler(Vector3.zero));
 
         // Get Bullet component of bullet prefab, set damage of bullet
         Bullet _bulletObject = _bullet.GetComponent<Bullet>();

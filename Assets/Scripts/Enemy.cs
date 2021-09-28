@@ -5,9 +5,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
+    // Enemy vars
     public float health = 10;
-
-    public string damagedByLayer;
+    public LayerMask damagedByLayer;
     public float damageAmount;
 
     private void OnEnable()
@@ -15,32 +15,38 @@ public class Enemy : MonoBehaviour
         health = 10;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer(damagedByLayer))
-        {
-            Bullet _bullet = collision.gameObject.GetComponent<Bullet>();
-            if (_bullet._canDamage)
-            {
-                Damage(_bullet._damage);
-                AudioManager.current.PlayClip(GameAssets.current.hitAudioClips[0]);
-
-                _bullet._canDamage = false;
-            }
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    // Check if collision is with bullet layer
+    //    int layer = collision.gameObject.layer;
+    //    if (damagedByLayer == 1 << layer)
+    //    {
+    //        // Get Bullet object, check if damage capable, do damage things
+    //        Bullet _bullet = collision.gameObject.GetComponent<Bullet>();
+    //        if (_bullet._canDamage)
+    //        {
+    //            Damage(_bullet._damage);
+    //            AudioManager.current.PlayClip(GameAssets.current.hitAudioClips[0]);
+    //
+    //            _bullet._canDamage = false;
+    //        }
+    //    }
+    //}
 
     private void FixedUpdate()
     {
+        // Very stupid enemy "AI"
         Vector3 lookPos = Player.current.transform.position - transform.position;
 
         transform.rotation = Quaternion.LookRotation(lookPos, Vector3.up); //Quaternion.Euler(0.0f, Mathf.Atan((Player.current.transform.position.y - transform.position.y) / (Player.current.transform.position.x - transform.position.x)), 0.0f);
         transform.position += transform.forward * 0.05f;
     }
 
-    private void Damage(float damage)
+    public void Damage(float damage)
     {
         health -= damage;
+        AudioManager.current.PlayClip(GameAssets.current.hitAudioClips[0]);
+
         if (health <= 0)
         {
             Die();
