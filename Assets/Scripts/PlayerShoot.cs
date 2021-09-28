@@ -5,16 +5,19 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
 
+    public static PlayerShoot current;
+
     // Weapon Vars
     public string weaponName;
     public float weaponDamage;
     public int weaponFireMode;
     public float weaponFireRate;
+    public int weaponAmmoType;
 
     // Bullet Vars
     public GameObject bullet;
     public Transform bulletSpawn;
-    ObjectPool bulletPool;
+    public ObjectPool bulletPool;
     public int bulletPoolAmount;
     public float shootForce;
 
@@ -28,6 +31,8 @@ public class PlayerShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        current = this;
+
         // UpdateWeapon() to be invoked when switching weapons
         GameEvents.current.OnSwitchWeapon += UpdateWeapon;
 
@@ -101,7 +106,7 @@ public class PlayerShoot : MonoBehaviour
 
         // Get Bullet component of bullet prefab, set damage of bullet
         Bullet _bulletObject = _bullet.GetComponent<Bullet>();
-        _bulletObject.InitializeBullet(weaponDamage);
+        _bulletObject.InitializeBullet(weaponDamage, weaponAmmoType);
 
         if (_bulletObject._damage != weaponDamage)
         {
@@ -123,11 +128,17 @@ public class PlayerShoot : MonoBehaviour
         weaponDamage = WeaponManager.current.currentWeaponClass.Item1._damage;
         weaponFireMode = WeaponManager.current.currentWeaponClass.Item1._fireMode;
         weaponFireRate = 1.0f / WeaponManager.current.currentWeaponClass.Item1._fireRate;
+        weaponAmmoType = WeaponManager.current.currentWeaponClass.Item1._ammoType;
     }
 
     private void SetAudioManagerReady()
     {
         audioManagerReady = true;
+    }
+
+    public ref ObjectPool GetBulletPool()
+    {
+        return ref bulletPool;
     }
 
 }

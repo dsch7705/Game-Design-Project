@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -717,10 +717,10 @@ Light:
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
-    m_Resolution: -1
+    m_Resolution: 3
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0.296
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -1223,9 +1223,15 @@ MonoBehaviour:
   weaponDamage: 0
   weaponFireMode: 0
   weaponFireRate: 0
+  weaponAmmoType: 0
   bullet: {fileID: 7218287719325554245, guid: dd1602d8067814941bdea752cfb615d9, type: 3}
   bulletSpawn: {fileID: 1227843980}
-  bulletPoolAmount: 50
+  bulletPool:
+    _poolName: 
+    _prefab: {fileID: 0}
+    _count: 0
+    _disableOnSpawn: 0
+  bulletPoolAmount: 200
   shootForce: 25
   audioManagerReady: 0
 --- !u!114 &973769533

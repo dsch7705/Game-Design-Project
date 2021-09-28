@@ -6,29 +6,61 @@ public class Bullet : MonoBehaviour
 {
     public LayerMask ricochetLayer;
     public LayerMask damageLayer;
+    public LayerMask explosionLayer;
 
     public float _damage;
     public bool _canDamage;
+    public int _ammoType;
 
-    public void InitializeBullet(float damage)
+    //public ObjectPool _bulletPool;
+
+    private void Awake()
+    {
+        //_bulletPool = PlayerShoot.current.GetBulletPool();
+    }
+
+    public void InitializeBullet(float damage, int ammoType)
     {
         _damage = damage;
         _canDamage = true;
+        _ammoType = ammoType;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         int layer = collision.gameObject.layer;
-        if (damageLayer == 1 << layer && _canDamage)
+        switch (_ammoType)
         {
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.Damage(_damage);
+            // Normal ammo
+            case 0:
+                if (damageLayer == 1 << layer && _canDamage)
+                {
+                    Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                    enemy.Damage(_damage);
 
-            _canDamage = false;
+                    _canDamage = false;
+                }
+                else if (ricochetLayer != 1 << layer)
+                {
+                    _canDamage = false;
+                }
+                break;
+
+            // Explosive ammo
+            case 1:
+                if (explosionLayer == 1 << layer && _canDamage)
+                {
+                    _canDamage = false;
+                    for (int i = 0; i < 50; i++)
+                    {
+                        GameObject fragment = PlayerShoot.current.bulletPool.Instantiate(transform.position, Quaternion.identity);
+                        Bullet fragmentBulletObject = fragment.GetComponent<Bullet>();
+                        fragmentBulletObject.InitializeBullet(_damage, 0);
+                    }
+
+                }
+                break;
         }
-        else if (ricochetLayer != 1 << layer)
-        {
-            _canDamage = false;
-        }
+        
     }
 }
