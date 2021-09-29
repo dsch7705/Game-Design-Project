@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public float health = 10;
     public LayerMask damagedByLayer;
     public float damageAmount;
+    public int enemyID;
 
     private void OnEnable()
     {
@@ -58,6 +59,7 @@ public class Enemy : MonoBehaviour
         GameEvents.current.EnemyKilled();
         EnemyManager.current.DestroyEnemy(gameObject);
 
+        Debug.Log(this.GetInstanceID() + "destroyed");
         GameEvents.current.SpawnEnemy();
     }
 }

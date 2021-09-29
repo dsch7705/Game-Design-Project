@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public LayerMask ricochetLayer;
+    public LayerMask bulletLayer;
     public LayerMask damageLayer;
     public LayerMask explosionLayer;
 
     public float _damage;
     public bool _canDamage;
     public int _ammoType;
+
+    public float bulletLifespan;
+    public int bounceLimit;
+    int bulletCollisions;
 
     //public ObjectPool _bulletPool;
 
@@ -39,11 +43,19 @@ public class Bullet : MonoBehaviour
                     enemy.Damage(_damage);
 
                     _canDamage = false;
+                    //Debug.Log("Bullet damage disabled");
                 }
-                else if (ricochetLayer != 1 << layer)
+                else if (bulletLayer != 1 << layer && bulletCollisions < bounceLimit)
                 {
-                    _canDamage = false;
+                    bulletCollisions++;
+                    if (bulletCollisions >= bounceLimit)
+                    {
+                        //Debug.Log("bounce limit reached");
+                        _canDamage = false;
+
+                    }
                 }
+
                 break;
 
             // Explosive ammo
@@ -62,5 +74,10 @@ public class Bullet : MonoBehaviour
                 break;
         }
         
+    }
+
+    IEnumerator BulletLifespan()
+    {
+        yield return new WaitForSeconds(bulletLifespan);
     }
 }

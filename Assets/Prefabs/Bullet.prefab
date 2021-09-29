@@ -125,9 +125,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34738dc611cb8d54ca601722cc02224e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ricochetLayer:
+  bulletLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 128
   damageLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -137,8 +137,5 @@ MonoBehaviour:
   _damage: 0
   _canDamage: 0
   _ammoType: 0
-  _bulletPool:
-    _poolName: 
-    _prefab: {fileID: 0}
-    _count: 0
-    _disableOnSpawn: 0
+  bulletLifespan: 0
+  bounceLimit: 2
