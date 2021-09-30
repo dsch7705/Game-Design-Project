@@ -14,6 +14,12 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         health = 10;
+        Debug.Log("Enemy " + gameObject.GetInstanceID() + " enabled.");
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("Enemy " + gameObject.GetInstanceID() + " disabled.");
     }
 
     //private void OnCollisionEnter(Collision collision)
@@ -48,6 +54,7 @@ public class Enemy : MonoBehaviour
         health -= damage;
         AudioManager.current.PlayClip(GameAssets.current.hitAudioClips[0]);
 
+        Debug.Log("Enemy " + gameObject.GetInstanceID() + " took " + damage + " damage.");
         if (health <= 0)
         {
             Die();
@@ -59,7 +66,7 @@ public class Enemy : MonoBehaviour
         GameEvents.current.EnemyKilled();
         EnemyManager.current.DestroyEnemy(gameObject);
 
-        Debug.Log(this.GetInstanceID() + "destroyed");
+        Debug.Log(gameObject.GetInstanceID() + "destroyed");
         GameEvents.current.SpawnEnemy();
     }
 }

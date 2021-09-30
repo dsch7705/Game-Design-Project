@@ -82,7 +82,7 @@ public class EnemyManager : MonoBehaviour
         for (int i = 0; i < enemiesAtOnce; i++)
         {
             SpawnFirstEnemy();
-            Debug.Log("spawning enemy " + i);
+            //Debug.Log("spawning enemy " + i);
         }
 
         waveKills = 0;

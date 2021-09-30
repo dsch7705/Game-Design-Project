@@ -62,7 +62,7 @@ public class PlayerShoot : MonoBehaviour
             case 0:
                 if (Input.GetMouseButtonDown(0) && shotTime <= 0)
                 {
-                    Shoot();
+                    Shoot(0);
                     shotTime = weaponFireRate;
                 }
                 else
@@ -74,7 +74,7 @@ public class PlayerShoot : MonoBehaviour
                 {
                     if (shotReady == true)
                     {
-                        Shoot();
+                        Shoot(weaponAmmoType);
                     }
                     shotReady = false;
                 }
@@ -87,7 +87,7 @@ public class PlayerShoot : MonoBehaviour
             case 1:
                 if ((Input.GetMouseButton(0) || Input.GetAxisRaw("Shoot") > 0) && shotTime <= 0)
                 {
-                    Shoot();
+                    Shoot(weaponAmmoType);
                     shotTime = weaponFireRate;
                 }
                 else
@@ -100,13 +100,14 @@ public class PlayerShoot : MonoBehaviour
     }
 
     // Fires weapon
-    private void Shoot()
+    public void Shoot(int ammoType)
     {
+        Debug.Log("Shooting with ammo type: " + ammoType);
         GameObject _bullet = bulletPool.Instantiate(bulletSpawn.position, Quaternion.Euler(Vector3.zero));
 
         // Get Bullet component of bullet prefab, set damage of bullet
         Bullet _bulletObject = _bullet.GetComponent<Bullet>();
-        _bulletObject.InitializeBullet(weaponDamage, weaponAmmoType);
+        _bulletObject.InitializeBullet(weaponDamage, ammoType);
 
         if (_bulletObject._damage != weaponDamage)
         {
@@ -129,6 +130,7 @@ public class PlayerShoot : MonoBehaviour
         weaponFireMode = WeaponManager.current.currentWeaponClass.Item1._fireMode;
         weaponFireRate = 1.0f / WeaponManager.current.currentWeaponClass.Item1._fireRate;
         weaponAmmoType = WeaponManager.current.currentWeaponClass.Item1._ammoType;
+        Debug.Log("AMMO TYPE: " + weaponAmmoType);
     }
 
     private void SetAudioManagerReady()

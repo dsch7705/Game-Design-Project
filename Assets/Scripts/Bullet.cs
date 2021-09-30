@@ -37,6 +37,7 @@ public class Bullet : MonoBehaviour
         {
             // Normal ammo
             case 0:
+                Debug.Log("Normal ammo collided.");
                 if (damageLayer == 1 << layer && _canDamage)
                 {
                     Enemy enemy = collision.gameObject.GetComponent<Enemy>();
@@ -60,14 +61,17 @@ public class Bullet : MonoBehaviour
 
             // Explosive ammo
             case 1:
+                Debug.Log("Explosive ammo collided.");
                 if (explosionLayer == 1 << layer && _canDamage)
                 {
                     _canDamage = false;
                     for (int i = 0; i < 50; i++)
                     {
-                        GameObject fragment = PlayerShoot.current.bulletPool.Instantiate(transform.position, Quaternion.identity);
-                        Bullet fragmentBulletObject = fragment.GetComponent<Bullet>();
-                        fragmentBulletObject.InitializeBullet(_damage, 0);
+                        Debug.Log(i);
+                        PlayerShoot.current.Shoot(1);
+                        //GameObject fragment = PlayerShoot.current.bulletPool.Instantiate(transform.position, Quaternion.Euler(Vector3.zero));
+                        //Bullet fragmentBulletObject = fragment.GetComponent<Bullet>();
+                        //fragmentBulletObject.InitializeBullet(_damage, 0);
                     }
 
                 }
