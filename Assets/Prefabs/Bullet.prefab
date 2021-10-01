@@ -137,5 +137,5 @@ MonoBehaviour:
   _damage: 0
   _canDamage: 0
   _ammoType: 0
-  bulletLifespan: 0
+  bulletLifespan: 1
   bounceLimit: 2

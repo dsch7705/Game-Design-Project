@@ -62,7 +62,7 @@ public class PlayerShoot : MonoBehaviour
             case 0:
                 if (Input.GetMouseButtonDown(0) && shotTime <= 0)
                 {
-                    Shoot(0);
+                    Shoot(weaponAmmoType);
                     shotTime = weaponFireRate;
                 }
                 else
@@ -102,7 +102,7 @@ public class PlayerShoot : MonoBehaviour
     // Fires weapon
     public void Shoot(int ammoType)
     {
-        Debug.Log("Shooting with ammo type: " + ammoType);
+        //Debug.Log("Shooting with ammo type: " + ammoType);
         GameObject _bullet = bulletPool.Instantiate(bulletSpawn.position, Quaternion.Euler(Vector3.zero));
 
         // Get Bullet component of bullet prefab, set damage of bullet

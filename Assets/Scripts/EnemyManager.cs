@@ -45,8 +45,14 @@ public class EnemyManager : MonoBehaviour
         AudioManager.current.PlayRandomClip(GameAssets.current.enemyDeathClips);
     }
 
+    public void StartEnemySpawn()
+    {
+        StartCoroutine(WaitForSpawn());
+    }
+
     public void SpawnEnemy()
     {
+
         if (waveKills + enemiesAtOnce <= enemiesInWave)
         {
             Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, lastEnemy).GetComponent<Enemy>();
@@ -107,4 +113,11 @@ public class EnemyManager : MonoBehaviour
     //        StartWave(wave);
     //    }
     //}
+
+    IEnumerator WaitForSpawn()
+    {
+        yield return new WaitForSeconds(0.25f);
+        SpawnEnemy();
+    }
 }
+

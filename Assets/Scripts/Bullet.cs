@@ -37,38 +37,38 @@ public class Bullet : MonoBehaviour
         {
             // Normal ammo
             case 0:
-                Debug.Log("Normal ammo collided.");
+                //Debug.Log("Normal ammo collided.");
                 if (damageLayer == 1 << layer && _canDamage)
                 {
                     Enemy enemy = collision.gameObject.GetComponent<Enemy>();
                     enemy.Damage(_damage);
-
-                    _canDamage = false;
+                
                     //Debug.Log("Bullet damage disabled");
                 }
-                else if (bulletLayer != 1 << layer && bulletCollisions < bounceLimit)
-                {
-                    bulletCollisions++;
-                    if (bulletCollisions >= bounceLimit)
-                    {
-                        //Debug.Log("bounce limit reached");
-                        _canDamage = false;
-
-                    }
-                }
+                StartCoroutine("BulletLifespan");
+                //else if (bulletLayer != 1 << layer && bulletCollisions < bounceLimit)
+                //{
+                //    bulletCollisions++;
+                //    if (bulletCollisions >= bounceLimit)
+                //    {
+                //        //Debug.Log("bounce limit reached");
+                //        _canDamage = false;
+                //
+                //    }
+                //}
 
                 break;
 
             // Explosive ammo
             case 1:
-                Debug.Log("Explosive ammo collided.");
+                //Debug.Log("Explosive ammo collided.");
                 if (explosionLayer == 1 << layer && _canDamage)
                 {
                     _canDamage = false;
                     for (int i = 0; i < 50; i++)
                     {
-                        Debug.Log(i);
-                        PlayerShoot.current.Shoot(1);
+                        //Debug.Log(i);
+                        PlayerShoot.current.Shoot(0);
                         //GameObject fragment = PlayerShoot.current.bulletPool.Instantiate(transform.position, Quaternion.Euler(Vector3.zero));
                         //Bullet fragmentBulletObject = fragment.GetComponent<Bullet>();
                         //fragmentBulletObject.InitializeBullet(_damage, 0);
@@ -83,5 +83,11 @@ public class Bullet : MonoBehaviour
     IEnumerator BulletLifespan()
     {
         yield return new WaitForSeconds(bulletLifespan);
+        Disable();
+    }
+
+    private void Disable()
+    {
+        _canDamage = false;
     }
 }

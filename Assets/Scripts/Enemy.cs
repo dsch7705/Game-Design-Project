@@ -14,12 +14,12 @@ public class Enemy : MonoBehaviour
     private void OnEnable()
     {
         health = 10;
-        Debug.Log("Enemy " + gameObject.GetInstanceID() + " enabled.");
+        //Debug.Log("Enemy " + gameObject.GetInstanceID() + " enabled.");
     }
 
     private void OnDisable()
     {
-        Debug.Log("Enemy " + gameObject.GetInstanceID() + " disabled.");
+        //Debug.Log("Enemy " + gameObject.GetInstanceID() + " disabled.");
     }
 
     //private void OnCollisionEnter(Collision collision)
@@ -68,5 +68,10 @@ public class Enemy : MonoBehaviour
 
         Debug.Log(gameObject.GetInstanceID() + "destroyed");
         GameEvents.current.SpawnEnemy();
+    }
+
+    IEnumerator WaitForSpawn()
+    {
+        yield return new WaitForSeconds(0.25f);
     }
 }
