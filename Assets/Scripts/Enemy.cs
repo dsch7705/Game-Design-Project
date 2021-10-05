@@ -64,10 +64,11 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         GameEvents.current.EnemyKilled();
-        EnemyManager.current.DestroyEnemy(gameObject);
+        //EnemyManager.current.DestroyEnemy(gameObject);
 
-        Debug.Log(gameObject.GetInstanceID() + "destroyed");
+        //Debug.Log(gameObject.GetInstanceID() + "destroyed");
         GameEvents.current.SpawnEnemy();
+        GameObject.Destroy(gameObject);
     }
 
     IEnumerator WaitForSpawn()
