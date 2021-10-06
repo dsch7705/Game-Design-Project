@@ -102,6 +102,13 @@ public class PlayerShoot : MonoBehaviour
     // Fires weapon
     public void Shoot(int ammoType)
     {
+        if (ammoType == 2)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                Shoot(0);
+            }
+        }
         //Debug.Log("Shooting with ammo type: " + ammoType);
         GameObject _bullet = bulletPool.Instantiate(bulletSpawn.position, Quaternion.Euler(Vector3.zero));
 

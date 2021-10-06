@@ -10,10 +10,12 @@ public class Enemy : MonoBehaviour
     public LayerMask damagedByLayer;
     public float damageAmount;
     public int enemyID;
+    bool dead = false;
 
     private void OnEnable()
     {
         health = 10;
+        dead = false;
         //Debug.Log("Enemy " + gameObject.GetInstanceID() + " enabled.");
     }
 
@@ -55,7 +57,7 @@ public class Enemy : MonoBehaviour
         AudioManager.current.PlayClip(GameAssets.current.hitAudioClips[0]);
 
         Debug.Log("Enemy " + gameObject.GetInstanceID() + " took " + damage + " damage.");
-        if (health <= 0)
+        if (health <= 0 && !dead)
         {
             Die();
         }
@@ -63,12 +65,13 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        dead = true;
         GameEvents.current.EnemyKilled();
-        //EnemyManager.current.DestroyEnemy(gameObject);
+        EnemyManager.current.DestroyEnemy(gameObject);
 
         //Debug.Log(gameObject.GetInstanceID() + "destroyed");
         GameEvents.current.SpawnEnemy();
-        GameObject.Destroy(gameObject);
+        //GameObject.Destroy(gameObject);
     }
 
     IEnumerator WaitForSpawn()

@@ -68,10 +68,12 @@ public class Bullet : MonoBehaviour
                     for (int i = 0; i < 50; i++)
                     {
                         //Debug.Log(i);
-                        PlayerShoot.current.Shoot(0);
-                        //GameObject fragment = PlayerShoot.current.bulletPool.Instantiate(transform.position, Quaternion.Euler(Vector3.zero));
-                        //Bullet fragmentBulletObject = fragment.GetComponent<Bullet>();
-                        //fragmentBulletObject.InitializeBullet(_damage, 0);
+                        GameObject fragment = PlayerShoot.current.bulletPool.Instantiate(transform.position, Quaternion.Euler(0f, Random.Range(1f, 360f), 0f));
+                        Rigidbody fragmentRb = fragment.GetComponent<Rigidbody>();
+                        fragmentRb.AddExplosionForce(10f, fragmentRb.position, 2f, 5f);
+
+                        Bullet fragmentBulletObject = fragment.GetComponent<Bullet>();
+                        fragmentBulletObject.InitializeBullet(_damage, 0);
                     }
 
                 }
@@ -89,5 +91,10 @@ public class Bullet : MonoBehaviour
     private void Disable()
     {
         _canDamage = false;
+    }
+
+    void AddExplosionForce(Rigidbody rb)
+    {
+        rb.AddExplosionForce(10f, rb.position, 2f, 5f);
     }
 }

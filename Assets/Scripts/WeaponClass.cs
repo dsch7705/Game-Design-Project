@@ -17,7 +17,7 @@ public class WeaponClass
     /// </summary>
     public float _fireRate;
     /// <summary>
-    /// 0 for normal, 1 for explosive
+    /// 0 for normal, 1 for explosive, 2 for shotgun
     /// </summary>
     public int _ammoType;
 

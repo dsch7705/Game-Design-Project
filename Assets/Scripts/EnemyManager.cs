@@ -13,6 +13,7 @@ public class EnemyManager : MonoBehaviour
     public ObjectPool enemyPool;
     public int count;
     private GameObject lastEnemy;
+    Transform enemyHolder;
 
     // Wave Vars
     public int wave = 1;
@@ -33,6 +34,7 @@ public class EnemyManager : MonoBehaviour
         ObjectPool objectPool = ObjectPoolManager.current.CreatePool("Enemy", enemyPrefab, count, true);
         enemyPool = objectPool; //ObjectPoolManager.current.CreatePool("Enemies", enemyPrefab, 10);
 
+        enemyHolder = new GameObject("Enemies").transform;
         StartWave(wave);
     }
 
@@ -55,7 +57,7 @@ public class EnemyManager : MonoBehaviour
 
         if (waveKills + enemiesAtOnce <= enemiesInWave)
         {
-            Enemy enemy = GameObject.Instantiate(enemyPrefab, new Vector3(0f, 10f, 0f), Quaternion.identity, new GameObject("Enemies").transform).GetComponent<Enemy>();   //enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, lastEnemy).GetComponent<Enemy>();
+            Enemy enemy = /*GameObject.Instantiate(enemyPrefab, new Vector3(0f, 10f, 0f), Quaternion.identity, enemyHolder).GetComponent<Enemy>();*/   enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, lastEnemy).GetComponent<Enemy>();
         }
         else if (waveKills == enemiesInWave)
         {
@@ -91,7 +93,7 @@ public class EnemyManager : MonoBehaviour
 
         for (int i = 0; i < enemiesAtOnce; i++)
         {
-            SpawnEnemy(); //SpawnFirstEnemy();
+            SpawnFirstEnemy();
             //Debug.Log("spawning enemy " + i);
         }
 
