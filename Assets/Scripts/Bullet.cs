@@ -70,7 +70,7 @@ public class Bullet : MonoBehaviour
                         //Debug.Log(i);
                         GameObject fragment = PlayerShoot.current.bulletPool.Instantiate(transform.position, Quaternion.Euler(0f, Random.Range(1f, 360f), 0f));
                         Rigidbody fragmentRb = fragment.GetComponent<Rigidbody>();
-                        fragmentRb.AddExplosionForce(10f, fragmentRb.position, 2f, 5f);
+                        
 
                         Bullet fragmentBulletObject = fragment.GetComponent<Bullet>();
                         fragmentBulletObject.InitializeBullet(_damage, 0);

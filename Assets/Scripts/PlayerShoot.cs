@@ -110,7 +110,7 @@ public class PlayerShoot : MonoBehaviour
             }
         }
         //Debug.Log("Shooting with ammo type: " + ammoType);
-        GameObject _bullet = bulletPool.Instantiate(bulletSpawn.position, Quaternion.Euler(Vector3.zero));
+        GameObject _bullet = bulletPool.Instantiate(bulletSpawn.position + new Vector3(Random.Range(-0.25f, 0.25f), Random.Range(-0.25f, 0.25f), 0f), Quaternion.Euler(Vector3.zero));
 
         // Get Bullet component of bullet prefab, set damage of bullet
         Bullet _bulletObject = _bullet.GetComponent<Bullet>();
