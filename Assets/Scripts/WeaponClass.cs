@@ -20,14 +20,16 @@ public class WeaponClass
     /// 0 for normal, 1 for explosive, 2 for shotgun
     /// </summary>
     public int _ammoType;
+    public int _weaponID;
 
-    public WeaponClass(string name, float damage, int fireMode, float fireRate, int ammoType)
+    public WeaponClass(string name, float damage, int fireMode, float fireRate, int ammoType, int weaponID)
     {
         _name = name;
         _damage = damage;
         _fireMode = (int)Mathf.Clamp(fireMode, 0.0f, 1.0f);
         _fireRate = fireRate;
         _ammoType = ammoType;
+        _weaponID = weaponID;
 
     }
 }

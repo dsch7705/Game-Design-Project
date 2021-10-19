@@ -69,4 +69,22 @@ public class GameEvents : MonoBehaviour
             OnAudioManagerReady();
         }
     }
+
+    public event Action OnPlayerDamaged;
+    public void PlayerDamaged()
+    {
+        if (OnPlayerDamaged != null)
+        {
+            OnPlayerDamaged();
+        }
+    }
+
+    public event Action OnPlayerDied;
+    public void PlayerDied()
+    {
+        if (OnPlayerDied != null)
+        {
+            OnPlayerDied();
+        }
+    }
 }
