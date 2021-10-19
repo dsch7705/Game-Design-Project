@@ -1,30 +1,35 @@
 using UnityEngine.UI;
 using LootLocker.Requests;
+using TMPro;
 using UnityEngine;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    public InputField MemberID, PlayerScore;
+    public TMP_InputField MemberID;
+    private int score;
     public int ID;
 
     private void Start()
     {
-        LootLockerSDKManager.StartSession("Player", (response) =>
+        string playerIdentifier = "unique_player_identifier_here";
+        LootLockerSDKManager.StartSession(playerIdentifier, (response) =>
         {
             if (response.success)
             {
-                Debug.Log("Server handshake successful.");
+                Debug.Log("Successful");
             }
             else
             {
-                Debug.LogWarning("Server handshake failed.");
+                Debug.LogWarning("failed: " + response.Error);
             }
         });
     }
 
     public void SubmitScore()
     {
-        LootLockerSDKManager.SubmitScore(MemberID.text, int.Parse(PlayerScore.text), ID, (response) => 
+        score = Player.current.kills;
+
+        LootLockerSDKManager.SubmitScore(MemberID.text, score, ID, (response) => 
         {
             if (response.success)
             {
@@ -32,7 +37,7 @@ public class LeaderboardManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Score failed to send.");
+                Debug.LogWarning("Score failed to send. " + response.Error);
             }
         });
     }
