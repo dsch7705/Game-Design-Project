@@ -7,6 +7,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
+    // Input
+    private GameplayInput gameInput;
+
     // Player movement vars
     Rigidbody rb;
     public float accelerationSpeed = 5.0f;
@@ -32,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        gameInput = GetComponent<GameplayInput>();
+
         rb = GetComponent<Rigidbody>();
 
         hRotationHelper.localRotation = transform.localRotation;
@@ -46,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
         #region Player
 
         // Keyboard input
-        float xMove = Input.GetAxisRaw("Horizontal");
-        float zMove = Input.GetAxisRaw("Vertical");
+        float xMove = gameInput.xMove;
+        float zMove = gameInput.zMove;
 
         // Store keyboard input in a Vector3, normalize and tweak speed
         Vector3 move = (transform.right * xMove + transform.forward * zMove).normalized * accelerationSpeed * Time.deltaTime;
@@ -80,8 +85,8 @@ public class PlayerMovement : MonoBehaviour
         #region Camera
 
         // Gather mouse input for camera
-        float mouseX = Input.GetAxis("Mouse X") + Input.GetAxis("ControllerHorizontal");
-        float mouseY = Input.GetAxis("Mouse Y") + Input.GetAxis("ControllerVertical");
+        float mouseX = gameInput.mouseX;
+        float mouseY = gameInput.mouseY;
 
 
         // Calculate up and down cam rotation

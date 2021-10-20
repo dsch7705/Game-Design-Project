@@ -13,6 +13,8 @@ public class ApplicationSetup : MonoBehaviour
 
         float timestep = 1f / fps;
         UnityEngine.Time.fixedDeltaTime = timestep;
+
+        Time.timeScale = 1f;
     }
 
     // Update is called once per frame

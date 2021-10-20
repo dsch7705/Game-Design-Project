@@ -10,6 +10,7 @@ public class DeathMenu : MonoBehaviour
     private void Start()
     {
         GameEvents.current.OnPlayerDied += Open;
+        GameEvents.current.OnGameReset += Close;
         gameObject.SetActive(false);
     }
 
@@ -21,7 +22,7 @@ public class DeathMenu : MonoBehaviour
             obj.SetActive(false);
         }
 
-        Time.timeScale = 0f;
+        Time.timeScale = 0.000001f;
         gameIsPaused = true;
 
         Cursor.lockState = CursorLockMode.None;

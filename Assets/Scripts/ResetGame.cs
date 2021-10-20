@@ -5,12 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class ResetGame : MonoBehaviour
 {
-
-    void Update()
+    public void RestartGame()
     {
-        if (Input.GetButtonUp("Reset"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        //GameEvents.current.GameReset();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    
 }

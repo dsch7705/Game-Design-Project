@@ -87,4 +87,13 @@ public class GameEvents : MonoBehaviour
             OnPlayerDied();
         }
     }
+
+    public event Action OnGameReset;
+    public void GameReset()
+    {
+        if (OnGameReset != null)
+        {
+            OnGameReset();
+        }
+    }
 }

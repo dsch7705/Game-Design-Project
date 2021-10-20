@@ -5,7 +5,11 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
 
+    // Singleton
     public static PlayerShoot current;
+
+    // Input
+    private GameplayInput gameInput;
 
     // Weapon Vars
     public string weaponName;
@@ -31,7 +35,11 @@ public class PlayerShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Singleton
         current = this;
+
+        // Input
+        gameInput = GetComponentInParent<GameplayInput>();
 
         // UpdateWeapon() to be invoked when switching weapons
         GameEvents.current.OnSwitchWeapon += UpdateWeapon;
@@ -60,7 +68,7 @@ public class PlayerShoot : MonoBehaviour
         switch (weaponFireMode)
         {
             case 0:
-                if (Input.GetMouseButtonDown(0) && shotTime <= 0)
+                if (gameInput.leftClick && shotTime <= 0)
                 {
                     Shoot(weaponAmmoType);
                     shotTime = weaponFireRate;
@@ -85,7 +93,7 @@ public class PlayerShoot : MonoBehaviour
                 break;
         
             case 1:
-                if ((Input.GetMouseButton(0) || Input.GetAxisRaw("Shoot") > 0) && shotTime <= 0)
+                if ((gameInput.leftClickHold || Input.GetAxisRaw("Shoot") > 0) && shotTime <= 0)
                 {
                     Shoot(weaponAmmoType);
                     shotTime = weaponFireRate;

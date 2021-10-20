@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
         GameEvents.current.OnEnemyKilled += PlayVoiceLine;
         GameEvents.current.OnEnemyKilled += KilledEnemy;
         GameEvents.current.PlayerDamaged();
+
+        //GameEvents.current.OnGameReset += PlayerReset;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -63,8 +65,12 @@ public class Player : MonoBehaviour
     private void Die()
     {
         GameEvents.current.PlayerDied();
-        GetComponent<PlayerMovement>().enabled = false;
-        GetComponentInChildren<PlayerShoot>().enabled = false;
+        GetComponent<GameplayInput>().enabled = false;
+    }
+
+    private void PlayerReset()
+    {
+        GetComponent<GameplayInput>().enabled = true;
     }
 
     public void PlayVoiceLine()

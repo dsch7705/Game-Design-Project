@@ -9,6 +9,9 @@ public class WeaponManager : MonoBehaviour
     // Singleton
     public static WeaponManager current;
 
+    // Input
+    private GameplayInput gameInput;
+
     // Current weapon class, stored in tuple
     public (WeaponClass, int) currentWeaponClass;
     [SerializeField] private int _currentWeaponClass;
@@ -18,7 +21,11 @@ public class WeaponManager : MonoBehaviour
 
     void Start()
     {
+        // Singleton
         current = this;
+
+        // Input
+        gameInput = GetComponentInParent<GameplayInput>();
 
         // weapons.Add(new WeaponClass("Pistol", 2.0f, 0, 2.0f, 0));
         // weapons.Add(new WeaponClass("Assault Rifle", 10.0f, 1, 10.0f, 0));
@@ -35,8 +42,8 @@ public class WeaponManager : MonoBehaviour
     void Update()
     {
         // shitty fix, reassess input system as a whole
-        if ((int)Input.GetAxis("Switch Weapon") != 0)
-        { SwitchWeapon((int)Input.GetAxis("Switch Weapon")); }
+        if (gameInput.switchWeapon != 0)
+        { SwitchWeapon(gameInput.switchWeapon); }
     }
 
     // Updates weapon choice via scrollwheel
