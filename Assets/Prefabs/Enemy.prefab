@@ -350,6 +350,7 @@ MonoBehaviour:
     m_Bits: 128
   damageAmount: 0.5
   enemyID: 0
+  healthBar: {fileID: 792634880221452892}
   playerLayer:
     serializedVersion: 2
     m_Bits: 8

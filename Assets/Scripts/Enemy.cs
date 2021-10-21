@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     public int enemyID;
     bool dead = false;
     Rigidbody rb;
-    EnemyHealthBar healthBar;
+    public EnemyHealthBar healthBar;
 
     public LayerMask playerLayer;
 
@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        healthBar = GetComponentInChildren<EnemyHealthBar>();
         healthBar.SetMaxHealth(health);
     }
 
