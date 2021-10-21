@@ -26,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
     public Camera cam;
     public Transform hRotationHelper;
     public Transform vRotationHelper;
+    public float camTiltAmount;
+    public float camTiltSmooth;
+    Vector3 camTiltVelocity = new Vector3(0.0f, 0.0f, 0.0f);
 
     public float camSmooth = 0.3f;
     float yVelocity = 0.0f;
@@ -79,7 +82,6 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
 
-
         #endregion
 
         #region Camera
@@ -95,12 +97,20 @@ public class PlayerMovement : MonoBehaviour
 
         // Rotate helper for smooth cam rotation
         hRotationHelper.Rotate(Vector3.up * mouseX, Space.Self);
-        vRotationHelper.localRotation = Quaternion.Euler(Vector3.right * xRotation);
+        vRotationHelper.localRotation = Quaternion.Euler((Vector3.right * xRotation) + new Vector3(gameInput.zMove * camTiltAmount, 0.0f, -gameInput.xMove * camTiltAmount));
 
         // Apply cam rotation
-        transform.localRotation = Quaternion.Euler(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, hRotationHelper.eulerAngles.y, ref yVelocity, camSmooth), 0);
+        Vector3 camTilt = (transform.right * gameInput.xMove + transform.forward * gameInput.zMove).normalized * accelerationSpeed * Time.deltaTime;
+
+        transform.localRotation = Quaternion.Euler(Mathf.SmoothDampAngle(transform.eulerAngles.x, hRotationHelper.eulerAngles.x, ref camTiltVelocity.x, camTiltSmooth), Mathf.SmoothDampAngle(transform.eulerAngles.y, hRotationHelper.eulerAngles.y, ref yVelocity, camSmooth), -gameInput.xMove);
         cam.transform.localRotation = Quaternion.Euler(Mathf.SmoothDampAngle(cam.transform.eulerAngles.x, vRotationHelper.eulerAngles.x, ref xVelocity, camSmooth), 0, 0);
         #endregion
+    }
+
+    void ScreenShift()
+    {
+        transform.rotation = Quaternion.Euler(0.01f, 0.0f, 0.01f);
+        //transform.rotation = Quaternion.Euler(rb.velocity.x, transform.rotation.y, rb.velocity.z);
     }
 
 }
