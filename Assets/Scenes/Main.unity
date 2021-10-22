@@ -477,7 +477,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 967781627}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &250178894
 GameObject:
@@ -1352,9 +1352,11 @@ MonoBehaviour:
   cam: {fileID: 963194227}
   hRotationHelper: {fileID: 657474643}
   vRotationHelper: {fileID: 535294547}
-  camTiltAmount: 1
+  tiltRotationHelper: {fileID: 679647323}
+  weaponGraphics: {fileID: 50587962}
+  camTiltAmount: 5
   camTiltSmooth: 0.3
-  camSmooth: 0.07
+  camSmooth: 0.05
 --- !u!4 &513643196
 Transform:
   m_ObjectHideFlags: 0
@@ -1719,6 +1721,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 967781627}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &679647322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 679647323}
+  m_Layer: 0
+  m_Name: TiltRotationHelper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &679647323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679647322}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 967781627}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &700599649
 GameObject:
@@ -2992,6 +3024,7 @@ Transform:
   m_Children:
   - {fileID: 657474643}
   - {fileID: 535294547}
+  - {fileID: 679647323}
   - {fileID: 224501136}
   m_Father: {fileID: 0}
   m_RootOrder: 7

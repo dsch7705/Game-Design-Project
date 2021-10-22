@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     public Camera cam;
     public Transform hRotationHelper;
     public Transform vRotationHelper;
+    public Transform tiltRotationHelper;
+    public GameObject weaponGraphics;
     public float camTiltAmount;
     public float camTiltSmooth;
     Vector3 camTiltVelocity = new Vector3(0.0f, 0.0f, 0.0f);
@@ -97,12 +99,14 @@ public class PlayerMovement : MonoBehaviour
 
         // Rotate helper for smooth cam rotation
         hRotationHelper.Rotate(Vector3.up * mouseX, Space.Self);
-        vRotationHelper.localRotation = Quaternion.Euler((Vector3.right * xRotation) + new Vector3(gameInput.zMove * camTiltAmount, 0.0f, -gameInput.xMove * camTiltAmount));
+        vRotationHelper.localRotation = Quaternion.Euler((Vector3.right * xRotation));
+        tiltRotationHelper.localRotation = Quaternion.Euler(gameInput.zMove * camTiltAmount, 0.0f, -gameInput.xMove * camTiltAmount);
 
         // Apply cam rotation
         Vector3 camTilt = (transform.right * gameInput.xMove + transform.forward * gameInput.zMove).normalized * accelerationSpeed * Time.deltaTime;
 
-        transform.localRotation = Quaternion.Euler(Mathf.SmoothDampAngle(transform.eulerAngles.x, hRotationHelper.eulerAngles.x, ref camTiltVelocity.x, camTiltSmooth), Mathf.SmoothDampAngle(transform.eulerAngles.y, hRotationHelper.eulerAngles.y, ref yVelocity, camSmooth), -gameInput.xMove);
+        transform.localRotation = Quaternion.Euler(0.0f, Mathf.SmoothDampAngle(transform.eulerAngles.y, hRotationHelper.eulerAngles.y, ref yVelocity, camSmooth), Mathf.SmoothDampAngle(transform.eulerAngles.z, tiltRotationHelper.eulerAngles.z, ref camTiltVelocity.z, camTiltSmooth));
+        weaponGraphics.transform.localRotation = Quaternion.Euler(Mathf.SmoothDampAngle(transform.eulerAngles.x, tiltRotationHelper.eulerAngles.x, ref camTiltVelocity.x, camTiltSmooth), 0.0f, 0.0f);
         cam.transform.localRotation = Quaternion.Euler(Mathf.SmoothDampAngle(cam.transform.eulerAngles.x, vRotationHelper.eulerAngles.x, ref xVelocity, camSmooth), 0, 0);
         #endregion
     }
