@@ -111,6 +111,17 @@ public class PlayerMovement : MonoBehaviour
         #endregion
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "SpeedRamp":
+                SpeedRamp ramp = other.GetComponent<SpeedRamp>();
+                Debug.Log("Player hit speed ramp.");
+                break;
+        }
+    }
+
     void ScreenShift()
     {
         transform.rotation = Quaternion.Euler(0.01f, 0.0f, 0.01f);

@@ -1706,9 +1706,10 @@ GameObject:
   - component: {fileID: 649013373}
   - component: {fileID: 649013372}
   - component: {fileID: 649013377}
+  - component: {fileID: 649013378}
   m_Layer: 0
-  m_Name: Prism
-  m_TagString: Untagged
+  m_Name: SpeedRamp1
+  m_TagString: SpeedRamp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1979,11 +1980,24 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 649013371}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.7051454, y: 1.2509494, z: 1.2643237}
   m_Center: {x: 1.0868809, y: 0.6254747, z: 0.6996622}
+--- !u!114 &649013378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649013371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4941f857b7706e5479030b8bab5dc07a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boostStrength: 0
 --- !u!1 &657474642
 GameObject:
   m_ObjectHideFlags: 0
@@ -2829,13 +2843,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 798599239}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.30750903, w: 0.95154524}
+  m_LocalPosition: {x: 0.585, y: 0.469, z: 0.6999998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 649013376}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 35.818}
 --- !u!1 &834224940
 GameObject:
   m_ObjectHideFlags: 0
@@ -6434,7 +6448,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-34148
+  m_Name: pb_Mesh17360
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
