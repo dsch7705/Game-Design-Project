@@ -80,7 +80,7 @@ public class Enemy : MonoBehaviour
         healthBar.SetHealth(health);
         AudioManager.current.PlayClip(GameAssets.current.hitAudioClips[0]);
 
-        Debug.Log("Enemy " + gameObject.GetInstanceID() + " took " + damage + " damage.");
+        // Debug.Log("Enemy " + gameObject.GetInstanceID() + " took " + damage + " damage.");
         if (health <= 0 && !dead)
         {
             Die();

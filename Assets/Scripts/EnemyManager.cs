@@ -86,7 +86,7 @@ public class EnemyManager : MonoBehaviour
         enemiesInWave = (int)(wave * enemyMultiplier);
         enemiesAtOnce = 1 + (int)(enemiesInWave / 2.0f);
 
-        Debug.Log("New wave started with " + enemiesInWave + " enemies, " + enemiesAtOnce + " at a time.");
+        // Debug.Log("New wave started with " + enemiesInWave + " enemies, " + enemiesAtOnce + " at a time.");
         waveActive = true;
 
         waveKills = 0;

@@ -87,7 +87,7 @@ public class Player : MonoBehaviour
     {
         kills++;
         EnemyManager.current.waveKills++;
-        Debug.Log(EnemyManager.current.waveKills);
+        // Debug.Log(EnemyManager.current.waveKills);
         GameEvents.current.PlayerKillsChanged();
     }
 

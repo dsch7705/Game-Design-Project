@@ -5,17 +5,16 @@ using UnityEngine;
 public class SpeedRamp : MonoBehaviour
 {
     public float boostStrength;
-    Transform forceDirection;
+    Vector3 forceDirection;
 
 
     private void Start()
     {
-        forceDirection = GetComponentInChildren<Transform>();
-        Debug.Log(forceDirection.tag + "!");
+        forceDirection = GetComponentInChildren<SpeedRampForceVector>().GetDirection();
     }
 
-    void RampBoost(Rigidbody rb)
+    public void RampBoost(Rigidbody rb)
     {
-        //rb.AddForce();
+        rb.AddForce(forceDirection * boostStrength, ForceMode.Impulse);
     }
 }

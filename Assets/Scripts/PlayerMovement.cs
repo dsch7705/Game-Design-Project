@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float accelerationSpeed = 5.0f;
     public float maxSpeed = 10.0f;
     public float velocityMultiplier = 1.0f;
+    public float momentum;
 
     // Player jump vars
     public Collider groundCheck;
@@ -68,21 +69,29 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity += move * velocityMultiplier;
 
         // Check if player let off keyboard, decelerate if so
-        if (move.x == 0 && rb.velocity.x != 0)
+        if (isGrounded)
         {
-            rb.velocity += new Vector3(-rb.velocity.x / 10 * accelerationSpeed * Time.deltaTime, 0, 0);
+            if (move.x == 0 && rb.velocity.x != 0)
+            {
+                rb.velocity += new Vector3(-rb.velocity.x / 10 * accelerationSpeed * Time.deltaTime, 0, 0);
+            }
+
+            if (move.z == 0 && rb.velocity.z != 0)
+            {
+                rb.velocity += new Vector3(0, 0, -rb.velocity.z / 10 * accelerationSpeed * Time.deltaTime);
+            }
         }
 
-        if (move.z == 0 && rb.velocity.z != 0)
-        {
-            rb.velocity += new Vector3(0, 0, -rb.velocity.z / 10 * accelerationSpeed * Time.deltaTime);
-        }
 
-        // Clamp velocity to maxSpeed variable
+        // Calculate momentum
+        momentum += 0.001f * rb.velocity.magnitude;
+        maxSpeed *= (1 + momentum);
+
         if (rb.velocity.magnitude > maxSpeed)
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
         }
+
 
         #endregion
 
@@ -117,7 +126,22 @@ public class PlayerMovement : MonoBehaviour
         {
             case "SpeedRamp":
                 SpeedRamp ramp = other.GetComponent<SpeedRamp>();
+                ramp.RampBoost(rb);
                 Debug.Log("Player hit speed ramp.");
+                break;
+
+            case "Ground":
+                isGrounded = true;
+                break;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "Ground":
+                isGrounded = false;
                 break;
         }
     }
