@@ -13,7 +13,9 @@ public class PlayerMovement : MonoBehaviour
     // Player movement vars
     Rigidbody rb;
     public float accelerationSpeed = 5.0f;
+    public float minSpeed = 10.0f;
     public float maxSpeed = 10.0f;
+    public float absoluteMaxSpeed = 25.0f;
     public float velocityMultiplier = 1.0f;
     public float momentum;
 
@@ -74,22 +76,34 @@ public class PlayerMovement : MonoBehaviour
             if (move.x == 0 && rb.velocity.x != 0)
             {
                 rb.velocity += new Vector3(-rb.velocity.x / 10 * accelerationSpeed * Time.deltaTime, 0, 0);
+                if (rb.velocity.magnitude > minSpeed)
+                {
+                    maxSpeed = rb.velocity.magnitude;
+                }
             }
 
             if (move.z == 0 && rb.velocity.z != 0)
             {
                 rb.velocity += new Vector3(0, 0, -rb.velocity.z / 10 * accelerationSpeed * Time.deltaTime);
+                if (rb.velocity.magnitude > minSpeed)
+                {
+                    maxSpeed = rb.velocity.magnitude;
+                }
             }
         }
 
 
         // Calculate momentum
-        momentum += 0.001f * rb.velocity.magnitude;
-        maxSpeed *= (1 + momentum);
 
         if (rb.velocity.magnitude > maxSpeed)
         {
             rb.velocity = rb.velocity.normalized * maxSpeed;
+            maxSpeed += 0.005f;
+        }
+
+        if (rb.velocity.magnitude >= absoluteMaxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * absoluteMaxSpeed;
         }
 
 
@@ -125,12 +139,13 @@ public class PlayerMovement : MonoBehaviour
         switch (other.tag)
         {
             case "SpeedRamp":
-                SpeedRamp ramp = other.GetComponent<SpeedRamp>();
-                ramp.RampBoost(rb);
-                Debug.Log("Player hit speed ramp.");
+                //SpeedRamp ramp = other.GetComponent<SpeedRamp>();
+                //ramp.RampBoost(rb);
+                //Debug.Log("Player hit speed ramp.");
                 break;
 
             case "Ground":
+                Debug.Log("Grounded");
                 isGrounded = true;
                 break;
         }

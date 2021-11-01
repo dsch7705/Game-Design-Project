@@ -13,6 +13,15 @@ public class SpeedRamp : MonoBehaviour
         forceDirection = GetComponentInChildren<SpeedRampForceVector>().GetDirection();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            RampBoost(rb);
+        }
+    }
+
     public void RampBoost(Rigidbody rb)
     {
         rb.AddForce(forceDirection * boostStrength, ForceMode.Impulse);
