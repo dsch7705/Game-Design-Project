@@ -6,18 +6,24 @@ public class GameplayInput : MonoBehaviour
 {
     public float xMove, zMove, mouseX, mouseY;
     public int switchWeapon;
-    public bool leftClick, leftClickHold;
+    public bool leftClick, leftClickHold, jump;
 
     void Update()
     {
+        // Movement
         xMove         = Input.GetAxisRaw("Horizontal");
         zMove         = Input.GetAxisRaw("Vertical");
 
+        jump          = Input.GetKeyDown(KeyCode.Space);
+
+        // Camera
         mouseX        = Input.GetAxis("Mouse X") + Input.GetAxis("ControllerHorizontal");
         mouseY        = Input.GetAxis("Mouse Y") + Input.GetAxis("ControllerVertical");
 
+        // Weapons
         switchWeapon  = (int)Input.GetAxis("Switch Weapon");
 
+        // Mouse input
         leftClick     = Input.GetMouseButtonDown(0);
         leftClickHold = Input.GetMouseButton(0);
     }
@@ -26,6 +32,8 @@ public class GameplayInput : MonoBehaviour
     {
         xMove         = 0.0f;
         zMove         = 0.0f;
+
+        jump          = false;
 
         mouseX        = 0.0f;
         mouseY        = 0.0f;

@@ -70,6 +70,12 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity += move * velocityMultiplier;
 
+        // Jumping
+        if (gameInput.jump)
+        {
+            rb.velocity += new Vector3(0, 0, 0);
+        }
+
         // Check if player let off keyboard, decelerate if so
         if (isGrounded)
         {
