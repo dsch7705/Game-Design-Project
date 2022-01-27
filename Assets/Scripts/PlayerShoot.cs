@@ -131,7 +131,7 @@ public class PlayerShoot : MonoBehaviour
 
         // Get Rigidbody component of bullet prefab, add shooting force
         Rigidbody rb = _bullet.GetComponent<Rigidbody>();
-        rb.AddForce(transform.forward * shootForce, ForceMode.Impulse);
+        rb.AddForce(transform.forward * (shootForce + Player.current.rb.velocity.magnitude), ForceMode.Impulse);
 
         // Play shooting sound
         AudioManager.current.PlayRandomClip(GameAssets.current.shootAudioClips);

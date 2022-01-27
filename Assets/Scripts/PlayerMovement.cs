@@ -71,9 +71,9 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity += move * velocityMultiplier;
 
         // Jumping
-        if (gameInput.jump)
+        if (gameInput.jump && isGrounded)
         {
-            rb.velocity += new Vector3(0, 0, 0);
+            rb.AddForce(new Vector3(rb.velocity.x, jumpForce, rb.velocity.z), ForceMode.Impulse);
         }
 
         // Check if player let off keyboard, decelerate if so

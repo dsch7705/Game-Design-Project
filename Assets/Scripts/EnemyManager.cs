@@ -57,7 +57,7 @@ public class EnemyManager : MonoBehaviour
 
         if (waveKills + enemiesAtOnce <= enemiesInWave)
         {
-            Enemy enemy = /*GameObject.Instantiate(enemyPrefab, new Vector3(0f, 10f, 0f), Quaternion.identity, enemyHolder).GetComponent<Enemy>();*/   enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, lastEnemy).GetComponent<Enemy>();
+            Enemy enemy = /*GameObject.Instantiate(enemyPrefab, new Vector3(0f, 10f, 0f), Quaternion.identity, enemyHolder).GetComponent<Enemy>();*/   enemyPool.Instantiate(new Vector3(Mathf.Cos(Random.Range(0, Mathf.PI * 2)) * 68f, 10f, 0f), Quaternion.identity, lastEnemy).GetComponent<Enemy>();
         }
         else if (waveKills == enemiesInWave)
         {

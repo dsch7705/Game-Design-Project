@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player current;
+    public Rigidbody rb;
+
     public int kills = 0;
     public LayerMask enemyLayer;
     private int health = 25;
@@ -12,6 +14,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         current = this;
+        rb = GetComponent<Rigidbody>();
 
         GameEvents.current.OnEnemyKilled += PlayVoiceLine;
         GameEvents.current.OnEnemyKilled += KilledEnemy;
