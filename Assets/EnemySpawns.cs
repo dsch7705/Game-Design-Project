@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySpawns : MonoBehaviour
 {
     public static EnemySpawns current;
-    public List<Transform> spawns = new List<Transform>;
+    public List<Transform> spawns = new List<Transform>();
 
     void Start()
     {
@@ -13,13 +13,13 @@ public class EnemySpawns : MonoBehaviour
 
         foreach (Transform child in transform)
         {
-            spawns += child;
+            spawns.Add(child);
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public Transform PickRandomSpawn()
     {
-        
+        int spawn = Random.Range(0, spawns.Count - 1);
+        return (spawns[spawn]);
     }
 }

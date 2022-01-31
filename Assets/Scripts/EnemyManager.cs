@@ -57,8 +57,8 @@ public class EnemyManager : MonoBehaviour
 
         if (waveKills + enemiesAtOnce <= enemiesInWave)
         {
-            float rand = Random.Range(0, 2 * Mathf.PI);
-            Enemy enemy = /*GameObject.Instantiate(enemyPrefab, new Vector3(0f, 10f, 0f), Quaternion.identity, enemyHolder).GetComponent<Enemy>();*/   enemyPool.Instantiate(new Vector3(Mathf.Cos(rand) * 68f, 10f, Mathf.Sin(rand) * 68f), Quaternion.identity, lastEnemy).GetComponent<Enemy>();
+            Transform spawn = EnemySpawns.current.PickRandomSpawn();
+            Enemy enemy = /*GameObject.Instantiate(enemyPrefab, new Vector3(0f, 10f, 0f), Quaternion.identity, enemyHolder).GetComponent<Enemy>();*/   enemyPool.Instantiate(spawn.position, Quaternion.identity, lastEnemy).GetComponent<Enemy>();
         }
         else if (waveKills == enemiesInWave)
         {
@@ -73,7 +73,8 @@ public class EnemyManager : MonoBehaviour
 
     public void SpawnFirstEnemy()
     {
-        Enemy enemy = enemyPool.Instantiate(new Vector3(0f, 10f, 0f), Quaternion.identity, 0).GetComponent<Enemy>();
+        Transform spawn = EnemySpawns.current.PickRandomSpawn();
+        Enemy enemy = enemyPool.Instantiate(spawn.position, Quaternion.identity, 0).GetComponent<Enemy>();
     }
 
     public void StartWave(int waveNumber)
