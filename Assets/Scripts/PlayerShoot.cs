@@ -105,6 +105,11 @@ public class PlayerShoot : MonoBehaviour
                 break;
         }
 
+        if (gameInput.rightClick)
+        {
+            Grappler.current.ShootGrapple();
+        }
+
     }
 
     // Fires weapon

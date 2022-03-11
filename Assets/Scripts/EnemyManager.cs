@@ -36,6 +36,8 @@ public class EnemyManager : MonoBehaviour
 
         enemyHolder = new GameObject("Enemies").transform;
         StartWave(wave);
+
+        GameEvents.current.WeaponManagerReady();
     }
 
     public void DestroyEnemy(GameObject enemy)
@@ -64,6 +66,8 @@ public class EnemyManager : MonoBehaviour
         {
             wave++;
             StartWave(wave);
+            GameEvents.current.WaveCompleted();
+            Debug.Log("Wave complete");
         }
         else
         {

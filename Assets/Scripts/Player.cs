@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     public int kills = 0;
     public LayerMask enemyLayer;
-    private int health = 25;
+    [SerializeField] private int health = 50;
 
     private void Start()
     {

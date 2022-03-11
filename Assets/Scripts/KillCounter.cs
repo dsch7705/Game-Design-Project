@@ -10,6 +10,7 @@ public class KillCounter : MonoBehaviour
     private void Start()
     {
         GameEvents.current.OnPlayerKillsChanged += UpdateKills;
+
         textObject = GetComponent<TMP_Text>();
 
         textObject.text = "Kills: 0";

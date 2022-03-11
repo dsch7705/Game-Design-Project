@@ -30,6 +30,15 @@ public class GameEvents : MonoBehaviour
         }
     }
 
+    public event Action OnEnemyManagerReady;
+    public void EnemyManagerReady()
+    {
+        if (OnEnemyManagerReady != null)
+        {
+            OnEnemyManagerReady();
+        }
+    }
+
     public event Action OnEnemyKilled;
     public void EnemyKilled()
     {
@@ -49,6 +58,15 @@ public class GameEvents : MonoBehaviour
         if (OnPlayerKillsChanged != null)
         {
             OnPlayerKillsChanged();
+        }
+    }
+
+    public event Action OnWaveCompleted;
+    public void WaveCompleted()
+    {
+        if (OnWaveCompleted != null)
+        {
+            OnWaveCompleted();
         }
     }
 
